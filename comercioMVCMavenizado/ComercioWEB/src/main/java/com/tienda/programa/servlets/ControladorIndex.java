@@ -19,8 +19,8 @@ public class ControladorIndex extends HttpServlet {
 	static final String RUTA_INDEX = "/WEB-INF/vistas/index.jsp";
 	static final String RUTA_FORMULARIO_LOGIN = "/WEB-INF/vistas/usuarioLogin.jsp";
 	static final String RUTA_FORMULARIO_REGISTRO = "/WEB-INF/vistas/usuarioRegistro.jsp";
-	static final String RUTA_ADMINISTRADOR_LOGEADO = "admin/controladorAdministrador";
-	static final String RUTA_USUARIO_LOGEADO = "usuarios/controladorUsuarios";
+	static final String RUTA_ADMINISTRADOR_LOGEADO = "admin/ControladorMenuAdministradores";
+	static final String RUTA_USUARIO_LOGEADO = "usuarios/controladorMenuUsuarios";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
@@ -56,16 +56,16 @@ public class ControladorIndex extends HttpServlet {
 				String nickLog = request.getParameter("nickusuario");
 				String passLog = request.getParameter("contrasenia");
 
-				DAOUsuarioddbb usuDB = new DAOUsuarioddbbMySQL();
-				usuDB.abrirComercioddbb();
-				usuarioLog = usuDB.buscarPorNick(nickLog);
-				usuDB.cerrarComercioddbb();
+				DAOUsuarioddbb usuDBLog = new DAOUsuarioddbbMySQL();
+				usuDBLog.abrirComercioddbb();
+				usuarioLog = usuDBLog.buscarPorNick(nickLog);
+				usuDBLog.cerrarComercioddbb();
 				// Comprobamos si el usuario esta registrado
 				if (usuarioLog == null) {
-					Usuario usu = new Usuario();
-					usu.setNickusuario(nickLog);
-					usu.setErrores("Usuario no valido.");
-					request.setAttribute("usuario", usu);
+					Usuario usuLog = new Usuario();
+					usuLog.setNickusuario(nickLog);
+					usuLog.setErrores("Usuario no valido.");
+					request.setAttribute("usuario", usuLog);
 					request.getRequestDispatcher(RUTA_FORMULARIO_LOGIN).forward(request, response);
 					return;
 				} else {
@@ -89,11 +89,66 @@ public class ControladorIndex extends HttpServlet {
 
 				// Creamos una instancia de usuario para guardar lo introducido
 				// por el usuario y comparar.
-				Usuario usuarioReg = null;
+				Usuario usuReg = new Usuario();
 				String nickReg = request.getParameter("nickusuario");
-				String passReg = request.getParameter("contrasenia");
+				String nombre = request.getParameter("nombre");
+				String apellido1 = request.getParameter("apellido1");
+				String apellido2 = request.getParameter("apellido2");
+				String passReg1 = request.getParameter("contrasenia1");
+				String passReg2 = request.getParameter("contrasenia2");
 
+				DAOUsuarioddbb usuDBReg = new DAOUsuarioddbbMySQL();
+				usuDBReg.abrirComercioddbb();
+
+				usuReg.setNickusuario(nickReg);
+				usuReg.setNombre(nombre);
+				usuReg.setApellido1(apellido1);
+				usuReg.setApellido2(apellido2);
+
+				// Si el nick ya existe.
+				if (usuDBReg.buscarPorNick(nickReg) != null) {
+					usuReg.setErrores("Nick no disponible.");
+					request.setAttribute("usuario", usuReg);
+					request.getRequestDispatcher(RUTA_FORMULARIO_REGISTRO).forward(request, response);
+					return;
+				}
+
+				// Si las contraseñas no coinciden
+				if (passReg1.equals(passReg2) == false) {
+					usuReg.setErrores("Las contraseñas deben de ser identicas.");
+					request.setAttribute("usuario", usuReg);
+					request.getRequestDispatcher(RUTA_FORMULARIO_REGISTRO).forward(request, response);
+					return;
+				}
+
+				// Longitudes minimas
+				if (nickReg.length() < 4) {
+					usuReg.setErrores("El nick debe tener al menos 5 caracteres.");
+					request.setAttribute("usuario", usuReg);
+					request.getRequestDispatcher(RUTA_FORMULARIO_REGISTRO).forward(request, response);
+					return;
+				}
+
+				if (passReg1.length() < 4) {
+					usuReg.setErrores("La contraseña debe tener al menos 5 caracteres.");
+					request.setAttribute("usuario", usuReg);
+					request.getRequestDispatcher(RUTA_FORMULARIO_REGISTRO).forward(request, response);
+					return;
+				}
+
+				// Registramos rol y password
+				usuReg.setRol(2);
+				usuReg.setContrasenia(passReg1);
+
+				// Todos los datos introducimos, creamos el usuario en la DB.
+				usuDBReg.insert(usuReg);
+
+				// Me devuelve un int que puedo o no controlar en "filtros?????"
+				usuDBReg.cerrarComercioddbb();
+
+				response.sendRedirect(request.getContextPath() + RUTA_USUARIO_LOGEADO);
 				return;
+
 			case "SALIR":
 				request.getRequestDispatcher(RUTA_INDEX).forward(request, response);
 				return;

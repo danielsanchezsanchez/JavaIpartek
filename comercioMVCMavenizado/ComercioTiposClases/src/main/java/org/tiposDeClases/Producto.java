@@ -1,14 +1,16 @@
 package org.tiposDeClases;
 
+import java.math.BigDecimal;
+
 public class Producto {
 
-	private String nombre, descripcion, errores;
+	private String nombre, descripcion, errores, url_producto_img;
 	private int ID;
-	private double precio;
+	private BigDecimal precio;
 
 	// Constructores
 
-	public Producto(String nombre, int iD, double precio, String descripcion) {
+	public Producto(String nombre, int iD, BigDecimal precio, String descripcion) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -16,7 +18,7 @@ public class Producto {
 		this.precio = precio;
 	}
 
-	public Producto(String nombre, int iD, double precio) {
+	public Producto(String nombre, int iD, BigDecimal precio) {
 		super();
 		this.nombre = nombre;
 		ID = iD;
@@ -24,7 +26,7 @@ public class Producto {
 	}
 
 	public Producto() {
-		this("", 0, 0.0, "");
+
 	}
 
 	// Getters y Setters
@@ -44,7 +46,7 @@ public class Producto {
 		return ID;
 	}
 
-	public double getPrecio() {
+	public BigDecimal getPrecio() {
 		return precio;
 	}
 
@@ -64,8 +66,16 @@ public class Producto {
 		ID = iD;
 	}
 
-	public void setPrecio(double precio) {
+	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
+	}
+
+	public String getUrl_producto_img() {
+		return url_producto_img;
+	}
+
+	public void setUrl_producto_img(String url_producto_img) {
+		this.url_producto_img = url_producto_img;
 	}
 
 	// HashCode y Equals
@@ -77,9 +87,8 @@ public class Producto {
 		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
 		result = prime * result + ((errores == null) ? 0 : errores.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(precio);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((precio == null) ? 0 : precio.hashCode());
+		result = prime * result + ((url_producto_img == null) ? 0 : url_producto_img.hashCode());
 		return result;
 	}
 
@@ -109,7 +118,15 @@ public class Producto {
 				return false;
 		} else if (!nombre.equals(other.nombre))
 			return false;
-		if (Double.doubleToLongBits(precio) != Double.doubleToLongBits(other.precio))
+		if (precio == null) {
+			if (other.precio != null)
+				return false;
+		} else if (!precio.equals(other.precio))
+			return false;
+		if (url_producto_img == null) {
+			if (other.url_producto_img != null)
+				return false;
+		} else if (!url_producto_img.equals(other.url_producto_img))
 			return false;
 		return true;
 	}
@@ -117,6 +134,6 @@ public class Producto {
 	// To String
 	@Override
 	public String toString() {
-		return "Producto [nombre=" + nombre + ", descripcion=" + descripcion + ", errores=" + errores + ", ID=" + ID + ", precio=" + precio + "]";
+		return "Producto [nombre=" + nombre + ", descripcion=" + descripcion + ", errores=" + errores + ", url_producto_img=" + url_producto_img + ", ID=" + ID + ", precio=" + precio + "]";
 	}
 }

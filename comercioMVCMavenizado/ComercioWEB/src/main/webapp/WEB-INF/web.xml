@@ -22,27 +22,27 @@
   <servlet>
   	<description>
   	</description>
-  	<display-name>ControladorUsuarios</display-name>
-  	<servlet-name>ControladorUsuarios</servlet-name>
-  	<servlet-class>com.tienda.programa.servlets.ControladorUsuarios</servlet-class>
+  	<display-name>ControladorMenuUsuarios</display-name>
+  	<servlet-name>ControladorMenuUsuarios</servlet-name>
+  	<servlet-class>com.tienda.programa.servlets.ControladorMenuUsuarios</servlet-class>
   </servlet>
   <servlet>
   	<description>
   	</description>
-  	<display-name>ControladorAdministrador</display-name>
-  	<servlet-name>ControladorAdministrador</servlet-name>
-  	<servlet-class>com.tienda.programa.servlets.ControladorAdministrador</servlet-class>
+  	<display-name>ControladorMenuAdministradores</display-name>
+  	<servlet-name>ControladorMenuAdministradores</servlet-name>
+  	<servlet-class>com.tienda.programa.servlets.ControladorMenuAdministradores</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>ControladorIndex</servlet-name>
   	<url-pattern>/controladorIndex</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>ControladorUsuarios</servlet-name>
-  	<url-pattern>/usuarios/controladorUsuarios</url-pattern>
+  	<servlet-name>ControladorMenuUsuarios</servlet-name>
+  	<url-pattern>/usuarios/controladorMenuUsuarios</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>ControladorAdministrador</servlet-name>
-  	<url-pattern>/admin/controladorAdministrador</url-pattern>
+  	<servlet-name>ControladorMenuAdministradores</servlet-name>
+  	<url-pattern>/admin/ControladorMenuAdministradores</url-pattern>
   </servlet-mapping>
 </web-app>

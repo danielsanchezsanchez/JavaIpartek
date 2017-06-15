@@ -20,13 +20,13 @@
 		</fieldset>
 		<fieldset>
 			<label for="apellido2">2º Apellido:</label> <input id="apellido2" name="apellido2"
-				value="${usuario.nickusuario}"/>
+				value="${usuario.apellido2}"/>
 		</fieldset>
 		<fieldset>
-			<label for="contrasenia1">Contraseña:</label> <input id="contrasenia1" name="contrasenia1"/>
+			<label for="contrasenia1">Contraseña:</label> <input type="password" id="contrasenia1" name="contrasenia1"/>
 		</fieldset>
 		<fieldset>
-			<label for="contrasenia2">Repita Contraseña:</label> <input id="contrasenia2" name="contrasenia2"/>
+			<label for="contrasenia2">Repita Contraseña:</label> <input type="password" id="contrasenia2" name="contrasenia2"/>
 		</fieldset>
 		<fieldset>
 			<input type="submit" name="op" value="REGISTRAR"/>

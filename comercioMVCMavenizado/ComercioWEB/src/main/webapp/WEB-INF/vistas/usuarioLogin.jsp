@@ -11,7 +11,7 @@
 				value="${usuario.nickusuario}"/>
 		</fieldset>
 		<fieldset>
-			<label for="contrasenia">Contraseña:</label> <input id="contrasenia" name="contrasenia"/>
+			<label for="contrasenia">Contraseña:</label> <input type="password" id="contrasenia" name="contrasenia"/>
 		</fieldset>
 		<fieldset>
 			<input type="submit" name="op" value="LOGEAR"/>

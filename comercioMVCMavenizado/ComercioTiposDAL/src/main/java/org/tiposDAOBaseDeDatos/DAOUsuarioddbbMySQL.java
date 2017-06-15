@@ -3,14 +3,16 @@ package org.tiposDAOBaseDeDatos;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.tiposDeClases.Usuario;
 
 public class DAOUsuarioddbbMySQL extends DAOComercioddbbMySQL implements DAOUsuarioddbb {
 
 	private final static String BUSCAR_POR_NICK = "SELECT * FROM usuarios WHERE nickusuario LIKE ?";
+	private final static String INSERT = "INSERT INTO usuarios (id_rol, nickusuario, nombre, apellido1, apellido2, contrasenia)" + " VALUES (?, ?, ?, ?, ?, ?)";
 
-	private PreparedStatement psBuscarPorNick;
+	private PreparedStatement psBuscarPorNick, psInsert;
 
 	private void cerrar(PreparedStatement ps) {
 		cerrar(ps, null);
@@ -77,8 +79,36 @@ public class DAOUsuarioddbbMySQL extends DAOComercioddbbMySQL implements DAOUsua
 
 	@Override
 	public int insert(Usuario usuario) {
-		// TODO Auto-generated method stub
-		return 0;
+		try {
+
+			psInsert = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+
+			psInsert.setInt(1, usuario.getRol());
+			psInsert.setString(2, usuario.getNickusuario());
+			psInsert.setString(3, usuario.getNombre());
+			psInsert.setString(4, usuario.getApellido1());
+			psInsert.setString(5, usuario.getApellido2());
+			psInsert.setString(6, usuario.getContrasenia());
+
+			int res = psInsert.executeUpdate();
+
+			if (res != 1) {
+				throw new DAOBaseDeDatosException("La inserción ha devuelto un valor " + res);
+			}
+			ResultSet generatedKeys = psInsert.getGeneratedKeys();
+
+			if (generatedKeys.next()) {
+				return generatedKeys.getInt(1);
+			} else {
+				throw new DAOBaseDeDatosException("No se ha recibido la clave generada");
+			}
+
+		} catch (SQLException e) {
+			throw new DAOBaseDeDatosException("Error en insert", e);
+		} finally {
+			cerrar(psInsert);
+		}
+
 	}
 
 	@Override
