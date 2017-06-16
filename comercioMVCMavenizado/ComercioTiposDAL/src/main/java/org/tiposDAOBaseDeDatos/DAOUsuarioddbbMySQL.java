@@ -4,15 +4,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import org.tiposDeClases.Usuario;
 
 public class DAOUsuarioddbbMySQL extends DAOComercioddbbMySQL implements DAOUsuarioddbb {
 
+	private final static String BUSCAR_TODOS = "SELECT * FROM productos";
 	private final static String BUSCAR_POR_NICK = "SELECT * FROM usuarios WHERE nickusuario LIKE ?";
 	private final static String INSERT = "INSERT INTO usuarios (id_rol, nickusuario, nombre, apellido1, apellido2, contrasenia)" + " VALUES (?, ?, ?, ?, ?, ?)";
 
-	private PreparedStatement psBuscarPorNick, psInsert;
+	private PreparedStatement psBuscarPorNick, psInsert, psBuscarTodos;
 
 	private void cerrar(PreparedStatement ps) {
 		cerrar(ps, null);
@@ -37,8 +39,34 @@ public class DAOUsuarioddbbMySQL extends DAOComercioddbbMySQL implements DAOUsua
 
 	@Override
 	public Usuario[] buscarTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+		ResultSet rs = null;
+		try {
+
+			psBuscarTodos = con.prepareStatement(BUSCAR_TODOS);
+			rs = psBuscarTodos.executeQuery();
+
+			Usuario usuario;
+
+			while (rs.next()) {
+				usuario = new Usuario();
+
+				usuario.setId(rs.getInt("id"));
+				usuario.setRol(rs.getInt("rol"));
+				usuario.setNickusuario(rs.getString("nickusuario"));
+				usuario.setNombre(rs.getString("nombre"));
+				usuario.setApellido1(rs.getString("apellido1"));
+				usuario.setApellido2(rs.getString("apellido2"));
+
+				usuarios.add(usuario);
+			}
+
+		} catch (SQLException e) {
+			throw new DAOBaseDeDatosException("Error en findAll", e);
+		} finally {
+			cerrar(psBuscarTodos, rs);
+		}
+		return usuarios.toArray(new Usuario[usuarios.size()]);
 	}
 
 	@Override

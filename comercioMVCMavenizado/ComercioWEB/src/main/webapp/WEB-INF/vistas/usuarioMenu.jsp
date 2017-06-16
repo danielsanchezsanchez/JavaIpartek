@@ -27,7 +27,7 @@
 		</tbody>
 	</table>
 	<div class="botonera">
-				<a id="botonSalir" href="${pageContext.request.contextPath}/controladorIndex?op=desconectarUsuario">-
+				<a onclick="return confirm('¿Estás seguro de que quieres salir');" id="botonSalir" href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=desconectar">-
 					Volver al inicio -</a> 
 			</div>
-<%@ include file="includes/cabeceraUsuario/cabeceraUsuario.jsp"%>
+<%@ include file="includes/cabeceraUsuario/pieUsuario.jsp"%>

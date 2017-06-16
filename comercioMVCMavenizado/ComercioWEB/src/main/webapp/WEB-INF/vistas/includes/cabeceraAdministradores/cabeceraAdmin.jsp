@@ -14,39 +14,12 @@
 	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 	<header>
 		<div id="loginCasilla">
-			<c:if test="${usuario.nombre==null or usuario.nombre=='' }">
-				<c:if
-					test="${pageContext.request.requestURI=='/WEB-INF/vistas/adminsform.jsp'}">
-					<p id="registroboton">- Iniciando sesion -</p>
-				</c:if>
-				<c:if
-					test="${pageContext.request.requestURI!='/WEB-INF/vistas/adminsform.jsp'}">
-					<c:if
-						test="${pageContext.request.requestURI=='/WEB-INF/vistas/usuarioRegistroInicial.jsp'}">
-						<p id="registroboton">- Registrando usuario -</p>
-					</c:if>
-					<c:if
-						test="${pageContext.request.requestURI!='/WEB-INF/vistas/usuarioRegistroInicial.jsp'}">
-						<a id="loginboton" href="${pageContext.request.contextPath}/controladorIndex?op=conectarUsuario">-
-							Iniciar sesion - |</a>
-						<a id="registroboton" href="${pageContext.request.contextPath}/controladorIndex?op=registro">-
-							Registrar usuario -</a>
-					</c:if>
-				</c:if>
-			</c:if>
-			<c:if test="${usuario.nombre!=null and usuario.nombre!='' }">
-				<c:if
-					test="${pageContext.request.requestURI=='/WEB-INF/vistas/adminsform.jsp'}">
-					<p id="registroboton">- Iniciando sesion -</p>
-				</c:if>
-				<c:if
-					test="${pageContext.request.requestURI!='/WEB-INF/vistas/adminsform.jsp'}">
-					<p id="usuarioDesconectar">
-						- Bienvenido ${fn:toUpperCase(usuario.nombre)} | <a
-							href="${pageContext.request.contextPath}/controladorIndex?op=desconectarUsuario">Desconectar
-							-</a>
-					</p>
-				</c:if>
-			</c:if>
+			<div id="loginCasilla">
+				<label id="logeadoboton">- Bienvenido:
+					${fn:toUpperCase(usuario.nickusuario)} - |</label> <a id="desconectarboton"
+					onclick="return confirm('¿Estás seguro de que quieres salir');"
+					href="${pageContext.request.contextPath}/admin/ControladorMenuAdministradores?op=desconectar">-
+					Desconectar -</a>
+			</div>
 		</div>
 	</header>

@@ -33,6 +33,20 @@
   	<servlet-name>ControladorMenuAdministradores</servlet-name>
   	<servlet-class>com.tienda.programa.servlets.ControladorMenuAdministradores</servlet-class>
   </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>UsuarioCRUD</display-name>
+  	<servlet-name>UsuarioCRUD</servlet-name>
+  	<servlet-class>com.tienda.programa.servlets.UsuarioCRUD</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>UsuarioFORMAdmin</display-name>
+  	<servlet-name>UsuarioFORMAdmin</servlet-name>
+  	<servlet-class>com.tienda.programa.servlets.UsuarioFORMAdmin</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>ControladorIndex</servlet-name>
   	<url-pattern>/controladorIndex</url-pattern>
@@ -44,5 +58,13 @@
   <servlet-mapping>
   	<servlet-name>ControladorMenuAdministradores</servlet-name>
   	<url-pattern>/admin/ControladorMenuAdministradores</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UsuarioCRUD</servlet-name>
+  	<url-pattern>/admin/usuarioCRUD</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UsuarioFORMAdmin</servlet-name>
+  	<url-pattern>/admin/usuarioFORMAdmin</url-pattern>
   </servlet-mapping>
 </web-app>

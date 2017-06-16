@@ -6,11 +6,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ControladorMenuAdministradores extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	static final String RUTA_MENU_ADMINISTRADOR = "/WEB-INF/vistas/administradorMenu.jsp";
+	static final String RUTA_INDEX = "/WEB-INF/vistas/index.jsp";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
@@ -21,6 +23,8 @@ public class ControladorMenuAdministradores extends HttpServlet {
 		// HttpSession sesion = request.getSession();
 		String op = request.getParameter("op");
 
+		HttpSession sesion = request.getSession();
+
 		// Primera vez que accede
 		if (op == null) {
 			request.getRequestDispatcher(RUTA_MENU_ADMINISTRADOR).forward(request, response);
@@ -30,8 +34,18 @@ public class ControladorMenuAdministradores extends HttpServlet {
 		// Opciones de administrador escojida
 		if (op != null) {
 			switch (op) {
+			case "desconectar":
+				sesion.invalidate();
+				request.getRequestDispatcher(RUTA_INDEX).forward(request, response);
+				return;
+			case "gestionUsuarios":
 
+				return;
+			case "gestionDeProductos":
+
+				return;
 			}
+
 		}
 	}
 

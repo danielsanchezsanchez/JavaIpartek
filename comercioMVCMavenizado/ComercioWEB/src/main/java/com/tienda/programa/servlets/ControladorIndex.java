@@ -30,7 +30,6 @@ public class ControladorIndex extends HttpServlet {
 
 		// Controlamos las diferentes opciones desde el controlador de la pagina
 		// de inicio
-		HttpSession sesion = request.getSession();
 		String op = request.getParameter("op");
 
 		if (op == null) {
@@ -38,10 +37,6 @@ public class ControladorIndex extends HttpServlet {
 			return;
 		} else {
 			switch (op) {
-			case "desconectarUsuario":
-				sesion.invalidate();
-				request.getRequestDispatcher(RUTA_INDEX).forward(request, response);
-				return;
 			case "conectarUsuario":
 				request.getRequestDispatcher(RUTA_FORMULARIO_LOGIN).forward(request, response);
 				return;
@@ -70,6 +65,10 @@ public class ControladorIndex extends HttpServlet {
 					return;
 				} else {
 					if (usuarioLog.getContrasenia().equals(passLog)) {
+						// Pasamos los parametros a la sesion para poder
+						// mostrarlos en jsp
+						HttpSession sesion = request.getSession();
+						sesion.setAttribute("usuario", usuarioLog);
 						if (usuarioLog.getRol() == 1) {
 							response.sendRedirect(request.getContextPath() + RUTA_ADMINISTRADOR_LOGEADO);
 							return;
@@ -145,6 +144,11 @@ public class ControladorIndex extends HttpServlet {
 
 				// Me devuelve un int que puedo o no controlar en "filtros?????"
 				usuDBReg.cerrarComercioddbb();
+
+				// Pasamos los parametros a la sesion para poder mostrarlos en
+				// jsp
+				HttpSession sesion = request.getSession();
+				sesion.setAttribute("usuario", usuReg);
 
 				response.sendRedirect(request.getContextPath() + RUTA_USUARIO_LOGEADO);
 				return;

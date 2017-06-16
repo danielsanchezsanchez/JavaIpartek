@@ -23,12 +23,12 @@
 					Registrar usuario -</a>
 			</c:if>
 			<c:if test="${pageContext.request.requestURI=='/WEB-INF/vistas/usuarioLogin.jsp'}">
-				<label id="loginboton"
+				<label id="logeadoboton"
 					>-
 					Logeando usuario - </label>
 			</c:if>
 			<c:if test="${pageContext.request.requestURI=='/WEB-INF/vistas/usuarioRegistro.jsp'}">
-				<label id="loginboton"
+				<label id="registradoboton"
 					>-
 					Registrando usuario - </label>
 			</c:if>

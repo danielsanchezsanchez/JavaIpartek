@@ -14,11 +14,10 @@
 	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 	<header>
 		<div id="loginCasilla">
-			<c:if test="${usuario.nickusuario==null or usuario.nickusuario=='' }">
-				<c:if
-					test="${pageContext.request.requestURI=='/WEB-INF/vistas/usuarioLogin.jsp'}">
-					<p id="registroboton">- Iniciando sesion -</p>
-				</c:if>
-			</c:if>
+			<label id="logeadoboton">- Bienvenido ${usuario.nickusuario}
+				- |</label> <a id="desconectarboton"
+				onclick="return confirm('¿Estás seguro de que quieres salir');"
+				href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=desconectar">-
+				Desconectar -</a>
 		</div>
 	</header>
