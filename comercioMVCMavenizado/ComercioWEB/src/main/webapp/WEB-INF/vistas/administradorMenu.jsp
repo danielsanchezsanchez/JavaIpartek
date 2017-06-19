@@ -7,11 +7,11 @@
 
 <div class="opcionesAdmin">
 		<h2 style="margin: 20px; border: '1';"><a id="botonGestionUsuarios"
-		href="${pageContext.request.contextPath}/admin/controladorMenuAdministradores?op=gestionUsuarios">-
+		href="${pageContext.request.contextPath}/admin/ControladorMenuAdministradores?op=gestionUsuarios">-
 		Gestion de usuarios -</a> 
 		
 		<a id="botonGestionProductos"
-		href="${pageContext.request.contextPath}/admin/controladorMenuAdministradores?op=gestionDeProductos">-
+		href="${pageContext.request.contextPath}/admin/ControladorMenuAdministradores?op=gestionDeProductos">-
 		Gestion de productos -</a></h2>
 </div>
 

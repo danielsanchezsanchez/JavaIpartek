@@ -10,6 +10,7 @@
 			<th>Nombre</th>
 			<th>Primer apellido</th>
 			<th>Segundo apellido</th>
+			<th>Rol del usuario:</th>
 			<th colspan="2">Operaciones</th>
 		</tr>
 	</thead>
@@ -20,9 +21,15 @@
 				<td>${usuario.nombre}</td>
 				<td>${usuario.apellido1}</td>
 				<td>${usuario.apellido2}</td>
-				<td><a href="usuarioCRUD?op=modificar&id=${usuario.id}">-
+				<c:if test="${usuario.rol == '1'}">
+					<td>Administrador</td>
+				</c:if>
+				<c:if test="${usuario.rol == '2'}">
+					<td>Cliente</td>
+				</c:if>
+				<td><a href="usuarioCRUD?op=modificar&nickusuario=${usuario.nickusuario}">-
 						Modificar -</a></td>
-				<td><a href="usuarioCRUD?op=borrar&id=${usuario.id}">-
+				<td><a href="usuarioCRUD?op=borrar&nickusuario=${usuario.nickusuario}">-
 						Borrar -</a></td>
 			</tr>
 		</c:forEach>

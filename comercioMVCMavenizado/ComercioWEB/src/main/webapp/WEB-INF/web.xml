@@ -1,70 +1,89 @@
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-	      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-	      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	      version="3.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
   <display-name>Archetype Created Web Application</display-name>
   <filter>
-  	<filter-name>filtros</filter-name>
-  	<filter-class>com.tienda.programa.filtros.filtros</filter-class>
+    <filter-name>filtros</filter-name>
+    <filter-class>com.tienda.programa.filtros.filtros</filter-class>
   </filter>
   <filter-mapping>
-  	<filter-name>filtros</filter-name>
-  	<url-pattern>/filtros</url-pattern>
+    <filter-name>filtros</filter-name>
+    <url-pattern>/filtros</url-pattern>
   </filter-mapping>
   <listener>
-  	<listener-class>com.tienda.programa.listeners.listener</listener-class>
+    <listener-class>com.tienda.programa.listeners.listener</listener-class>
   </listener>
   <servlet>
-  	<servlet-name>ControladorIndex</servlet-name>
-  	<servlet-class>com.tienda.programa.servlets.ControladorIndex</servlet-class>
+    <servlet-name>ControladorIndex</servlet-name>
+    <servlet-class>com.tienda.programa.servlets.ControladorIndex</servlet-class>
   </servlet>
   <servlet>
-  	<description>
+    <description>
   	</description>
-  	<display-name>ControladorMenuUsuarios</display-name>
-  	<servlet-name>ControladorMenuUsuarios</servlet-name>
-  	<servlet-class>com.tienda.programa.servlets.ControladorMenuUsuarios</servlet-class>
+    <display-name>ControladorMenuUsuarios</display-name>
+    <servlet-name>ControladorMenuUsuarios</servlet-name>
+    <servlet-class>com.tienda.programa.servlets.ControladorMenuUsuarios</servlet-class>
   </servlet>
   <servlet>
-  	<description>
+    <description>
   	</description>
-  	<display-name>ControladorMenuAdministradores</display-name>
-  	<servlet-name>ControladorMenuAdministradores</servlet-name>
-  	<servlet-class>com.tienda.programa.servlets.ControladorMenuAdministradores</servlet-class>
+    <display-name>ControladorMenuAdministradores</display-name>
+    <servlet-name>ControladorMenuAdministradores</servlet-name>
+    <servlet-class>com.tienda.programa.servlets.ControladorMenuAdministradores</servlet-class>
   </servlet>
   <servlet>
-  	<description>
+    <description>
   	</description>
-  	<display-name>UsuarioCRUD</display-name>
-  	<servlet-name>UsuarioCRUD</servlet-name>
-  	<servlet-class>com.tienda.programa.servlets.UsuarioCRUD</servlet-class>
+    <display-name>UsuarioCRUD</display-name>
+    <servlet-name>UsuarioCRUD</servlet-name>
+    <servlet-class>com.tienda.programa.servlets.UsuarioCRUD</servlet-class>
   </servlet>
   <servlet>
-  	<description>
+    <description>
   	</description>
-  	<display-name>UsuarioFORMAdmin</display-name>
-  	<servlet-name>UsuarioFORMAdmin</servlet-name>
-  	<servlet-class>com.tienda.programa.servlets.UsuarioFORMAdmin</servlet-class>
+    <display-name>UsuarioFORMAdmin</display-name>
+    <servlet-name>UsuarioFORMAdmin</servlet-name>
+    <servlet-class>com.tienda.programa.servlets.UsuarioFORMAdmin</servlet-class>
+  </servlet>
+  <servlet>
+    <description>
+  	</description>
+    <display-name>ProductoCRUD</display-name>
+    <servlet-name>ProductoCRUD</servlet-name>
+    <servlet-class>com.tienda.programa.servlets.ProductoCRUD</servlet-class>
+  </servlet>
+  <servlet>
+    <description>
+  	</description>
+    <display-name>ProductoFORMAdmin</display-name>
+    <servlet-name>ProductoFORMAdmin</servlet-name>
+    <servlet-class>com.tienda.programa.servlets.ProductoFORMAdmin</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>ControladorIndex</servlet-name>
-  	<url-pattern>/controladorIndex</url-pattern>
+    <servlet-name>ControladorIndex</servlet-name>
+    <url-pattern>/controladorIndex</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>ControladorMenuUsuarios</servlet-name>
-  	<url-pattern>/usuarios/controladorMenuUsuarios</url-pattern>
+    <servlet-name>ControladorMenuUsuarios</servlet-name>
+    <url-pattern>/usuarios/controladorMenuUsuarios</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>ControladorMenuAdministradores</servlet-name>
-  	<url-pattern>/admin/ControladorMenuAdministradores</url-pattern>
+    <servlet-name>ControladorMenuAdministradores</servlet-name>
+    <url-pattern>/admin/ControladorMenuAdministradores</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>UsuarioCRUD</servlet-name>
-  	<url-pattern>/admin/usuarioCRUD</url-pattern>
+    <servlet-name>UsuarioCRUD</servlet-name>
+    <url-pattern>/admin/usuarioCRUD</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>UsuarioFORMAdmin</servlet-name>
-  	<url-pattern>/admin/usuarioFORMAdmin</url-pattern>
+    <servlet-name>UsuarioFORMAdmin</servlet-name>
+    <url-pattern>/admin/usuarioFORMAdmin</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ProductoCRUD</servlet-name>
+    <url-pattern>/admin/productoCRUD</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ProductoFORMAdmin</servlet-name>
+    <url-pattern>/admin/productoFORMAdmin</url-pattern>
   </servlet-mapping>
 </web-app>

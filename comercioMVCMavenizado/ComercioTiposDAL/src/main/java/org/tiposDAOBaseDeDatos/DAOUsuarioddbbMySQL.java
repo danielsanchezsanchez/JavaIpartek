@@ -10,11 +10,13 @@ import org.tiposDeClases.Usuario;
 
 public class DAOUsuarioddbbMySQL extends DAOComercioddbbMySQL implements DAOUsuarioddbb {
 
-	private final static String BUSCAR_TODOS = "SELECT * FROM productos";
+	private final static String BUSCAR_TODOS = "SELECT * FROM usuarios";
 	private final static String BUSCAR_POR_NICK = "SELECT * FROM usuarios WHERE nickusuario LIKE ?";
 	private final static String INSERT = "INSERT INTO usuarios (id_rol, nickusuario, nombre, apellido1, apellido2, contrasenia)" + " VALUES (?, ?, ?, ?, ?, ?)";
+	private final static String UPDATE = "UPDATE usuarios " + "SET id_rol = ?, nickusuario = ?, nombre = ?, apellido1 = ?, apellido2 = ? " + "WHERE id = ?";
+	private final static String DELETE = "DELETE FROM usuarios WHERE id = ?";
 
-	private PreparedStatement psBuscarPorNick, psInsert, psBuscarTodos;
+	private PreparedStatement psBuscarPorNick, psInsert, psBuscarTodos, psUpdate, psDelete;
 
 	private void cerrar(PreparedStatement ps) {
 		cerrar(ps, null);
@@ -29,12 +31,8 @@ public class DAOUsuarioddbbMySQL extends DAOComercioddbbMySQL implements DAOUsua
 				ps.close();
 			}
 		} catch (SQLException e) {
-			throw new DAOBaseDeDatosException("Error en findAll", e);
+			throw new DAOBaseDeDatosException("Error en cerrar con 2 parametros", e);
 		}
-	}
-
-	public DAOUsuarioddbbMySQL() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -52,7 +50,7 @@ public class DAOUsuarioddbbMySQL extends DAOComercioddbbMySQL implements DAOUsua
 				usuario = new Usuario();
 
 				usuario.setId(rs.getInt("id"));
-				usuario.setRol(rs.getInt("rol"));
+				usuario.setRol(rs.getInt("id_rol"));
 				usuario.setNickusuario(rs.getString("nickusuario"));
 				usuario.setNombre(rs.getString("nombre"));
 				usuario.setApellido1(rs.getString("apellido1"));
@@ -62,7 +60,7 @@ public class DAOUsuarioddbbMySQL extends DAOComercioddbbMySQL implements DAOUsua
 			}
 
 		} catch (SQLException e) {
-			throw new DAOBaseDeDatosException("Error en findAll", e);
+			throw new DAOBaseDeDatosException("Error en Buscar Todos", e);
 		} finally {
 			cerrar(psBuscarTodos, rs);
 		}
@@ -141,19 +139,56 @@ public class DAOUsuarioddbbMySQL extends DAOComercioddbbMySQL implements DAOUsua
 
 	@Override
 	public void update(Usuario usuario) {
-		// TODO Auto-generated method stub
+		try {
+
+			psUpdate = con.prepareStatement(UPDATE);
+			psUpdate.setInt(1, usuario.getRol());
+			psUpdate.setString(2, usuario.getNickusuario());
+			psUpdate.setString(3, usuario.getNombre());
+			psUpdate.setString(4, usuario.getApellido1());
+			psUpdate.setString(5, usuario.getApellido2());
+
+			psUpdate.setInt(6, usuario.getId());
+
+			int res = psUpdate.executeUpdate();
+
+			if (res != 1)
+				if (res == 0) {
+
+				} else {
+					throw new DAOBaseDeDatosException("Estas intentando modificar mas de un usuario " + res);
+				}
+
+		} catch (SQLException e) {
+			throw new DAOBaseDeDatosException("Error en update", e);
+		} finally {
+			cerrar(psUpdate);
+		}
 
 	}
 
 	@Override
 	public void delete(Usuario usuario) {
-		// TODO Auto-generated method stub
+		delete(usuario.getId());
 
 	}
 
 	@Override
 	public void delete(int id) {
-		// TODO Auto-generated method stub
+		try {
+			psDelete = con.prepareStatement(DELETE);
+			psDelete.setInt(1, id);
+
+			int res = psDelete.executeUpdate();
+
+			if (res != 1)
+				throw new DAOBaseDeDatosException("El delete ha devuelto un valor " + res);
+
+		} catch (SQLException e) {
+			throw new DAOBaseDeDatosException("Error en delete", e);
+		} finally {
+			cerrar(psDelete);
+		}
 
 	}
 

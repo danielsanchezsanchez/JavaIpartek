@@ -26,6 +26,15 @@ public class Usuario {
 		this.errores = errores;
 	}
 
+	public Usuario(int rol, String nickusuario, String nombre, String apellido1, String apellido2) {
+		super();
+		this.rol = rol;
+		this.nickusuario = nickusuario;
+		this.nombre = nombre;
+		this.apellido1 = apellido1;
+		this.apellido2 = apellido2;
+	}
+
 	// Getters y Setters
 	public int getId() {
 		return id;

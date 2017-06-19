@@ -25,6 +25,14 @@ public class Producto {
 		this.precio = precio;
 	}
 
+	public Producto(String nombre, BigDecimal precio, String descripcion, String url_producto_img) {
+		super();
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.url_producto_img = url_producto_img;
+		this.precio = precio;
+	}
+
 	public Producto() {
 
 	}
