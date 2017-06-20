@@ -69,7 +69,7 @@ public class ProductoFORMAdmin extends HttpServlet {
 
 			DAOProducto.insert(producto);
 			DAOProducto.cerrarComercioddbb();
-			response.sendRedirect(request.getContextPath() + RUTA_ADMINISTRADOR_REGISTROPRODUCTO);
+			response.sendRedirect(request.getContextPath() + RUTA_ADMINISTRADOR_PRODUCTOCRUD);
 			return;
 		}
 	}

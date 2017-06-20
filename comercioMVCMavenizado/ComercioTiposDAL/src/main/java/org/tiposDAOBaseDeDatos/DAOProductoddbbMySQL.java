@@ -31,7 +31,7 @@ public class DAOProductoddbbMySQL extends DAOComercioddbbMySQL implements DAOPro
 				ps.close();
 			}
 		} catch (SQLException e) {
-			throw new DAOBaseDeDatosException("Error en findAll", e);
+			throw new DAOBaseDeDatosException("Error en Buscar todos", e);
 		}
 	}
 

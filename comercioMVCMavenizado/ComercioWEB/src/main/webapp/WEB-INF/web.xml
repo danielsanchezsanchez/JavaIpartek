@@ -58,6 +58,20 @@
     <servlet-name>ProductoFORMAdmin</servlet-name>
     <servlet-class>com.tienda.programa.servlets.ProductoFORMAdmin</servlet-class>
   </servlet>
+  <servlet>
+    <description>
+  	</description>
+    <display-name>FacturaCRUD</display-name>
+    <servlet-name>FacturaCRUD</servlet-name>
+    <servlet-class>com.tienda.programa.servlets.FacturaCRUD</servlet-class>
+  </servlet>
+  <servlet>
+    <description>
+  	</description>
+    <display-name>FacturaFORMAdmin</display-name>
+    <servlet-name>FacturaFORMAdmin</servlet-name>
+    <servlet-class>com.tienda.programa.servlets.FacturaFORMAdmin</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>ControladorIndex</servlet-name>
     <url-pattern>/controladorIndex</url-pattern>
@@ -85,5 +99,13 @@
   <servlet-mapping>
     <servlet-name>ProductoFORMAdmin</servlet-name>
     <url-pattern>/admin/productoFORMAdmin</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FacturaCRUD</servlet-name>
+    <url-pattern>/admin/facturaCRUD</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>FacturaFORMAdmin</servlet-name>
+    <url-pattern>/admin/facturaFORMAdmin</url-pattern>
   </servlet-mapping>
 </web-app>

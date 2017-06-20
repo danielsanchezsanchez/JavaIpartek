@@ -6,7 +6,7 @@ public interface DAOUsuarioddbb extends DAOComercioddbb {
 
 	public Usuario[] buscarTodos();
 
-	public Usuario buscarPorId(int id);
+	public int buscarElId(String nick);
 
 	public Usuario buscarPorNick(String nickusuario);
 

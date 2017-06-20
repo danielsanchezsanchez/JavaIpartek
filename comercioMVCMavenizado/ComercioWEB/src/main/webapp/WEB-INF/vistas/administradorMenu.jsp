@@ -6,13 +6,18 @@
 <h2 style="margin: 20px;">Opciones de administrador:</h2>
 
 <div class="opcionesAdmin">
-		<h2 style="margin: 20px; border: '1';"><a id="botonGestionUsuarios"
+		<h2 style="margin: 20px; border: '1';">
+		<a id="botonGestionUsuarios"
 		href="${pageContext.request.contextPath}/admin/ControladorMenuAdministradores?op=gestionUsuarios">-
 		Gestion de usuarios -</a> 
 		
 		<a id="botonGestionProductos"
 		href="${pageContext.request.contextPath}/admin/ControladorMenuAdministradores?op=gestionDeProductos">-
-		Gestion de productos -</a></h2>
+		Gestion de productos -</a>
+		
+		<a id="botonGestionFacturas"
+		href="${pageContext.request.contextPath}/admin/ControladorMenuAdministradores?op=gestionDeFacturas">-
+		Gestion de facturas -</a></h2>
 </div>
 
 <div class="botonera">

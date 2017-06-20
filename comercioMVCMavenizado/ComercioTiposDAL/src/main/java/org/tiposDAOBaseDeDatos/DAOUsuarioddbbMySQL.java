@@ -12,11 +12,12 @@ public class DAOUsuarioddbbMySQL extends DAOComercioddbbMySQL implements DAOUsua
 
 	private final static String BUSCAR_TODOS = "SELECT * FROM usuarios";
 	private final static String BUSCAR_POR_NICK = "SELECT * FROM usuarios WHERE nickusuario LIKE ?";
+	private final static String BUSCAR_EL_ID = "SELECT id FROM usuarios WHERE nickusuario LIKE ?";
 	private final static String INSERT = "INSERT INTO usuarios (id_rol, nickusuario, nombre, apellido1, apellido2, contrasenia)" + " VALUES (?, ?, ?, ?, ?, ?)";
 	private final static String UPDATE = "UPDATE usuarios " + "SET id_rol = ?, nickusuario = ?, nombre = ?, apellido1 = ?, apellido2 = ? " + "WHERE id = ?";
 	private final static String DELETE = "DELETE FROM usuarios WHERE id = ?";
 
-	private PreparedStatement psBuscarPorNick, psInsert, psBuscarTodos, psUpdate, psDelete;
+	private PreparedStatement psBuscarPorNick, psBuscarElId, psInsert, psBuscarTodos, psUpdate, psDelete;
 
 	private void cerrar(PreparedStatement ps) {
 		cerrar(ps, null);
@@ -68,9 +69,25 @@ public class DAOUsuarioddbbMySQL extends DAOComercioddbbMySQL implements DAOUsua
 	}
 
 	@Override
-	public Usuario buscarPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public int buscarElId(String nick) {
+		ResultSet rs = null;
+		int i = 0;
+		try {
+			psBuscarElId = con.prepareStatement(BUSCAR_EL_ID);
+			psBuscarElId.setString(1, nick);
+			rs = psBuscarElId.executeQuery();
+
+			if (rs.next()) {
+				i = rs.getInt("id");
+			}
+
+		} catch (SQLException e) {
+			throw new DAOBaseDeDatosException("Error en findById", e);
+		} finally {
+			cerrar(psBuscarPorNick, rs);
+		}
+
+		return i;
 	}
 
 	@Override

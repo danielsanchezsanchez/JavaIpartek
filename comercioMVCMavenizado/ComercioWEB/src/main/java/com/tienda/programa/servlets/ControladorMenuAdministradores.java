@@ -15,6 +15,7 @@ public class ControladorMenuAdministradores extends HttpServlet {
 	static final String RUTA_INDEX = "/WEB-INF/vistas/index.jsp";
 	static final String RUTA_ADMINISTRADOR_USUARIOCRUD = "/admin/usuarioCRUD";
 	static final String RUTA_ADMINISTRADOR_PRODUCTOCRUD = "/admin/productoCRUD";
+	static final String RUTA_ADMINISTRADOR_FACTURACRUD = "/admin/facturaCRUD";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
@@ -45,6 +46,9 @@ public class ControladorMenuAdministradores extends HttpServlet {
 				return;
 			case "gestionDeProductos":
 				response.sendRedirect(request.getContextPath() + RUTA_ADMINISTRADOR_PRODUCTOCRUD);
+				return;
+			case "gestionDeFacturas":
+				response.sendRedirect(request.getContextPath() + RUTA_ADMINISTRADOR_FACTURACRUD);
 				return;
 			}
 
