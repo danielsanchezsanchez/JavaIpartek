@@ -1,24 +1,22 @@
 package org.tiposDeClases;
 
-public class Articulos {
+public class Articulo {
 
-	private int id_usuario, id_producto, cantidad;
+	private int id_producto, cantidad;
 
 	// Constructores
-	public Articulos(int id_usuario, int id_producto) {
+
+	public Articulo(int id_producto, int cantidad) {
 		super();
-		this.id_usuario = id_usuario;
 		this.id_producto = id_producto;
+		this.cantidad = cantidad;
 	}
 
-	public Articulos() {
+	public Articulo() {
 
 	}
 
 	// Getters y Setters
-	public int getId_usuario() {
-		return id_usuario;
-	}
 
 	public int getId_producto() {
 		return id_producto;
@@ -26,10 +24,6 @@ public class Articulos {
 
 	public int getCantidad() {
 		return cantidad;
-	}
-
-	public void setId_usuario(int id_usuario) {
-		this.id_usuario = id_usuario;
 	}
 
 	public void setId_producto(int id_producto) {
@@ -43,7 +37,7 @@ public class Articulos {
 	// To String
 	@Override
 	public String toString() {
-		return "Carrito [id_usuario=" + id_usuario + ", id_producto=" + id_producto + ", cantidad=" + cantidad + "]";
+		return "Carrito [id_producto=" + id_producto + ", cantidad=" + cantidad + "]";
 	}
 
 }

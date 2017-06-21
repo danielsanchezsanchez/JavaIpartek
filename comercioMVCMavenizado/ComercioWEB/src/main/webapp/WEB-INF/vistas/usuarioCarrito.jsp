@@ -25,9 +25,9 @@
 				<td>${producto.precio}&euro;</td>
 				<td>${producto.descripcion}</td>
 				<td>Imagen en proceso</td>
-				<td>Cantidad: <input type="number" value='${producto.cantidad}' name="cantidad"></td>
+				<td>Cantidad: <input min="0" max="100" style="width: 3em" type="number" value='1' name="cantidad" ></td>
 				<td><a
-					href="controladorMenuUsuarios?op=seguirComprando&id=${producto.ID}&cantidad=${producto.cantidad}">-
+					href="controladorMenuUsuarios?op=seguirComprando&id=${producto.ID}&cantidad=">-
 						Añadir a la compra -</a></td>
 			</tr>
 		</c:forEach>
@@ -42,4 +42,6 @@
 		href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=desconectar">-
 		Volver al inicio -</a>
 </div>
+
+<script>cantidator();</script>
 <%@ include file="includes/cabeceraUsuario/pieUsuario.jsp"%>
