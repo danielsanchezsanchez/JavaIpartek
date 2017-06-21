@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class Producto {
 
 	private String nombre, descripcion, errores, url_producto_img;
-	private int ID;
+	private int ID, cantidad;
 	private BigDecimal precio;
 
 	// Constructores
@@ -84,6 +84,14 @@ public class Producto {
 
 	public void setUrl_producto_img(String url_producto_img) {
 		this.url_producto_img = url_producto_img;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
 	}
 
 	// HashCode y Equals

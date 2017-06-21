@@ -22,15 +22,16 @@ public class ControladorMenuUsuarios extends HttpServlet {
 	static final String RUTA_MENU_USUARIO_CARRITO = "/WEB-INF/vistas/usuarioCarrito.jsp";
 	static final String RUTA_INDEX = "/WEB-INF/vistas/index.jsp";
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
 		// Controlamos las opciones
 		String op = request.getParameter("op");
-		int opCompra = Integer.parseInt(request.getParameter("opCompra"));
 
 		// Obtenemos el id del usuario conectado
 		String nick = request.getParameter("nickusuario");
@@ -46,15 +47,18 @@ public class ControladorMenuUsuarios extends HttpServlet {
 
 		// Primera vez que accede
 		if (op == null) {
-			request.getRequestDispatcher(RUTA_MENU_USUARIO).forward(request, response);
+			request.getRequestDispatcher(RUTA_MENU_USUARIO).forward(request,
+					response);
 			return;
 		}
 
 		if (op != null) {
+
 			switch (op) {
 			case "desconectar":
 				sesion.invalidate();
-				request.getRequestDispatcher(RUTA_INDEX).forward(request, response);
+				request.getRequestDispatcher(RUTA_INDEX).forward(request,
+						response);
 				return;
 
 			case "comenzarAComprar":
@@ -66,15 +70,16 @@ public class ControladorMenuUsuarios extends HttpServlet {
 
 				// Mando los productos
 				request.setAttribute("productos", productos);
-				request.getRequestDispatcher(RUTA_MENU_USUARIO_CARRITO).forward(request, response);
+				request.getRequestDispatcher(RUTA_MENU_USUARIO_CARRITO)
+						.forward(request, response);
 				return;
 			case "seguirComprando":
 
 				// Si ha comprado algo lo guardamos AQUI
-				if (opCompra != 0) {
-					// articulos = articulos + new Articulos(nick, opCompra);
-				}
-
+				int id = Integer.parseInt(request.getParameter("id"));
+				int cantidad=Integer.parseInt(request.getParameter("cantidad"));
+				System.out.println(id);
+				System.out.println(cantidad);
 				// Busco y relleno los productos
 				productoDB.abrirComercioddbb();
 				Producto[] productosSeguir;
@@ -83,7 +88,8 @@ public class ControladorMenuUsuarios extends HttpServlet {
 
 				// Mando los productos
 				request.setAttribute("productos", productosSeguir);
-				request.getRequestDispatcher(RUTA_MENU_USUARIO_CARRITO).forward(request, response);
+				request.getRequestDispatcher(RUTA_MENU_USUARIO_CARRITO)
+						.forward(request, response);
 				return;
 			}
 

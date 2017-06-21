@@ -5,32 +5,41 @@
 
 <h2 style="margin: 20px;">Listado de productos</h2>
 
-	<table border="1">
-		<thead>
+<table border="1">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Producto</th>
+			<th>Precio</th>
+			<th>Descripcion</th>
+			<th>Imagen</th>
+			<th>Cantidad</th>
+			<th>Añadir al carrito</th>
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach items="${requestScope.productos}" var="producto">
 			<tr>
-				<th>ID</th>
-				<th>Producto</th>
-				<th>Precio</th>
-				<th>Descripcion</th>
-				<th>Imagen</th>
-				<th>Añadir al carrito</th>
-			</tr>	</thead>
-		<tbody>
-			<c:forEach items="${requestScope.productos}" var="producto">
-				<tr>
-					<td>${producto.ID}</td>
-					<td>${producto.nombre}</td>
-					<td>${producto.precio} &euro;</td>
-					<td>${producto.descripcion}</td>
-					<td>Imagen en proceso</td>
-					<td><a href="controladorMenuUsuarios?opCompra=añadir&id=${producto.ID}">-
+				<td>${producto.ID}</td>
+				<td>${producto.nombre}</td>
+				<td>${producto.precio}&euro;</td>
+				<td>${producto.descripcion}</td>
+				<td>Imagen en proceso</td>
+				<td>Cantidad: <input type="number" value='${producto.cantidad}' name="cantidad"></td>
+				<td><a
+					href="controladorMenuUsuarios?op=seguirComprando&id=${producto.ID}&cantidad=${producto.cantidad}">-
 						Añadir a la compra -</a></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	<div class="botonera">
-				<a onclick="return confirm('¿Estás seguro de que quieres salir');" id="botonSalir" href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=desconectar">-
-					Volver al inicio -</a> 
-			</div>
+			</tr>
+		</c:forEach>
+	</tbody>
+</table>
+<div class="botonera">
+	<a id="botonVolverMenu"
+		href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios">-
+		Volver al menu de cliente -</a> <a
+		onclick="return confirm('¿Estás seguro de que quieres salir');"
+		id="botonSalirIndex"
+		href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=desconectar">-
+		Volver al inicio -</a>
+</div>
 <%@ include file="includes/cabeceraUsuario/pieUsuario.jsp"%>
