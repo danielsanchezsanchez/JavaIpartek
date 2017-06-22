@@ -3,11 +3,12 @@
   <display-name>Archetype Created Web Application</display-name>
   <filter>
     <filter-name>filtros</filter-name>
-    <filter-class>com.tienda.programa.filtros.filtros</filter-class>
+    <filter-class>com.tienda.programa.filtros.Filtros</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>filtros</filter-name>
-    <url-pattern>/filtros</url-pattern>
+    <url-pattern>/admin/*</url-pattern>
+    <url-pattern>/usuarios/*</url-pattern>
   </filter-mapping>
   <listener>
     <listener-class>com.tienda.programa.listeners.listener</listener-class>
@@ -82,7 +83,7 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ControladorMenuAdministradores</servlet-name>
-    <url-pattern>/admin/ControladorMenuAdministradores</url-pattern>
+    <url-pattern>/admin/controladorMenuAdministradores</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>UsuarioCRUD</servlet-name>

@@ -2,7 +2,9 @@ package org.tiposDAL;
 
 import java.util.TreeMap;
 
+import org.tiposDAOBaseDeDatos.DAOProductoddbbMySQL;
 import org.tiposDeClases.Articulo;
+import org.tiposDeClases.Producto;
 
 public class CarritoDALColeccion implements CarritoDAL {
 
@@ -10,7 +12,14 @@ public class CarritoDALColeccion implements CarritoDAL {
 
 	@Override
 	public void aniadir(Articulo articulo) {
-		articulos.put(articulo.getId_producto(), articulo);
+		DAOProductoddbbMySQL DAOProducto = new DAOProductoddbbMySQL();
+		Producto producto = new Producto();
+		DAOProducto.abrirComercioddbb();
+		producto = DAOProducto.buscarPorId(articulo.getId_producto());
+		DAOProducto.cerrarComercioddbb();
+		Articulo articuloaniadir = new Articulo(articulo.getId_producto(), articulo.getCantidad(), producto);
+		articulos.put(articuloaniadir.getId_producto(), articuloaniadir);
+
 	}
 
 	@Override

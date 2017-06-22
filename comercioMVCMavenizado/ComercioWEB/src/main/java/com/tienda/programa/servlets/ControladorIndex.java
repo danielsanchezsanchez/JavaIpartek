@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.tiposDAL.CarritoDAL;
+import org.tiposDAL.CarritoDALFactory;
 import org.tiposDAOBaseDeDatos.DAOUsuarioddbb;
 import org.tiposDAOBaseDeDatos.DAOUsuarioddbbMySQL;
 import org.tiposDeClases.Usuario;
@@ -74,6 +76,13 @@ public class ControladorIndex extends HttpServlet {
 							return;
 						}
 						if (usuarioLog.getRol() == 2) {
+							// Cargamos en una DAL de articulos "CARRITO" cada
+							// una de las
+							// peticiones.
+							CarritoDAL carrito;
+							carrito = CarritoDALFactory.getCarritoDAL();
+							sesion.setAttribute("carrito", carrito);
+
 							response.sendRedirect(request.getContextPath() + RUTA_USUARIO_LOGEADO);
 							return;
 						}
@@ -149,6 +158,12 @@ public class ControladorIndex extends HttpServlet {
 				// jsp
 				HttpSession sesion = request.getSession();
 				sesion.setAttribute("usuario", usuReg);
+
+				// Cargamos en una DAL de articulos "CARRITO" cada una de las
+				// peticiones.
+				CarritoDAL carrito;
+				carrito = CarritoDALFactory.getCarritoDAL();
+				sesion.setAttribute("carrito", carrito);
 
 				response.sendRedirect(request.getContextPath() + RUTA_USUARIO_LOGEADO);
 				return;

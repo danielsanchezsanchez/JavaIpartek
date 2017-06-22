@@ -15,14 +15,14 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.tiposDeClases.Usuario;
 
-public class filtros implements Filter {
+public class Filtros implements Filter {
 
-	private static Logger log = Logger.getLogger(filtros.class);
+	private static Logger log = Logger.getLogger(Filtros.class);
 	static final String RUTA_INDEX = "/controladorIndex";
-	static final String RUTA_CONTROLADOR_USUARIONORMAL = "/usuario/controladorusuarionormal";
-	static final String RUTA_CONTROLADOR_ADMINISTRADOR = "/admin/controladoradmin";
+	static final String RUTA_CONTROLADOR_USUARIONORMAL = "/usuarios/controladorMenuUsuarios";
+	static final String RUTA_CONTROLADOR_ADMINISTRADOR = "/admin/controladorMenuAdministradores";
 
-	public filtros() {
+	public Filtros() {
 
 	}
 
@@ -42,11 +42,6 @@ public class filtros implements Filter {
 		// METODO PARA VER LAS URL POR LAS QUE PASA
 		String urlComprobacion = req.getRequestURI();
 		log.info("Entra la url: " + urlComprobacion);
-		if (session.getAttribute("usuario") == null) {
-			log.info("Entra en la opcion no esta logeado");
-			res.sendRedirect(req.getContextPath() + RUTA_INDEX);
-			return;
-		}
 
 		// Controla que un usuario normal no pueda entrar en opciones de
 		// administrador
@@ -56,9 +51,10 @@ public class filtros implements Filter {
 			return;
 		}
 
-		// Controla que un administrador no pueda entrar en opciones de usuario
+		// Controla que un administrador no pueda entrar en opciones de
+		// usuario
 		// normal
-		if ((req.getRequestURI()).startsWith("/usuario/") && usuario.getRol() == 1) {
+		if ((req.getRequestURI()).startsWith("/usuarios/") && usuario.getRol() == 1) {
 			log.info("Entra en la opcion es un administrador");
 			res.sendRedirect(req.getContextPath() + RUTA_CONTROLADOR_ADMINISTRADOR);
 			return;

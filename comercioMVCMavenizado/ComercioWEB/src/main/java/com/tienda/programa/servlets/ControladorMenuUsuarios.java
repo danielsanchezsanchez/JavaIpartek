@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.tiposDAL.CarritoDAL;
-import org.tiposDAL.CarritoDALFactory;
 import org.tiposDAOBaseDeDatos.DAOProductoddbb;
 import org.tiposDAOBaseDeDatos.DAOProductoddbbMySQL;
 import org.tiposDAOBaseDeDatos.DAOUsuarioddbb;
@@ -21,6 +20,7 @@ public class ControladorMenuUsuarios extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	static final String RUTA_MENU_USUARIO = "/WEB-INF/vistas/usuarioMenu.jsp";
+	static final String RUTA_MENU_USUARIO_COMPRANDO = "/WEB-INF/vistas/usuarioComprando.jsp";
 	static final String RUTA_MENU_USUARIO_CARRITO = "/WEB-INF/vistas/usuarioCarrito.jsp";
 	static final String RUTA_INDEX = "/WEB-INF/vistas/index.jsp";
 
@@ -69,22 +69,31 @@ public class ControladorMenuUsuarios extends HttpServlet {
 
 				// Mando los productos
 				request.setAttribute("productos", productos);
-				request.getRequestDispatcher(RUTA_MENU_USUARIO_CARRITO).forward(request, response);
+				request.getRequestDispatcher(RUTA_MENU_USUARIO_COMPRANDO).forward(request, response);
 				return;
 			case "seguirComprando":
-				// Si ha comprado algo lo guardamos AQUI
-				int id_producto = Integer.parseInt(request.getParameter("id"));
-				int cantidad = Integer.parseInt(request.getParameter("cantidad"));
-				articulo = new Articulo(id_producto, cantidad);
+				String ruta = request.getParameter("ruta");
 
-				// Cargamos en una DAL de articulos "CARRITO" cada una de las
-				// peticiones.
-				CarritoDAL carrito;
-				carrito = CarritoDALFactory.getCarritoDAL();
-				carrito.aniadir(articulo);
-				for (Articulo articulo2 : carrito.buscarTodosLosArticulos())
-					System.out.println(articulo2);
+				// Si estoy viendo los productos no guardo nada
+				if (ruta != null) {
 
+				} else {
+					// Si ha comprado algo lo guardamos AQUI
+					int id_producto = Integer.parseInt(request.getParameter("id"));
+					int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+					articulo = new Articulo(id_producto, cantidad);
+
+					// Añado el articulo al carrito
+					// En la session ofc
+					CarritoDAL carrito;
+					carrito = (CarritoDAL) sesion.getAttribute("carrito");
+					carrito.aniadir(articulo);
+					sesion.setAttribute("carrito", carrito);
+
+					// Mostrar el contenido del carrito
+					for (Articulo articulo2 : carrito.buscarTodosLosArticulos())
+						System.out.println(articulo2);
+				}
 				// Busco y relleno los productos
 				productoDB.abrirComercioddbb();
 				Producto[] productosSeguir;
@@ -93,6 +102,14 @@ public class ControladorMenuUsuarios extends HttpServlet {
 
 				// Mando los productos
 				request.setAttribute("productos", productosSeguir);
+				request.getRequestDispatcher(RUTA_MENU_USUARIO_COMPRANDO).forward(request, response);
+				return;
+			case "verCarrito":
+
+				// Mando el carrito
+				CarritoDAL carrito;
+				carrito = (CarritoDAL) sesion.getAttribute("carrito");
+				request.setAttribute("articulos", carrito.buscarTodosLosArticulos());
 				request.getRequestDispatcher(RUTA_MENU_USUARIO_CARRITO).forward(request, response);
 				return;
 			}

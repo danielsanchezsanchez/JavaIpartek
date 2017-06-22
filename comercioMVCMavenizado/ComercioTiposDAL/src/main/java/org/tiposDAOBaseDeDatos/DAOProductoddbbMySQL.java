@@ -12,11 +12,12 @@ public class DAOProductoddbbMySQL extends DAOComercioddbbMySQL implements DAOPro
 
 	private final static String BUSCAR_TODOS = "SELECT * FROM productos";
 	private final static String BUSCAR_POR_NOMBRE = "SELECT * FROM productos WHERE nombre LIKE ?";
+	private final static String BUSCAR_POR_ID = "SELECT * FROM productos WHERE id LIKE ?";
 	private final static String INSERT = "INSERT INTO productos (nombre, precio, descripcion, url_producto_img)" + " VALUES (?, ?, ?, ?)";
 	private final static String UPDATE = "UPDATE productos " + "SET nombre = ?, precio = ?, descripcion = ?, url_producto_img = ? " + "WHERE id = ?";
 	private final static String DELETE = "DELETE FROM productos WHERE id = ?";
 
-	private PreparedStatement psBuscarTodos, psBuscarPorNombre, psInsert, psUpdate, psDelete;
+	private PreparedStatement psBuscarTodos, psBuscarPorNombre, psBuscarPorId, psInsert, psUpdate, psDelete;
 
 	private void cerrar(PreparedStatement ps) {
 		cerrar(ps, null);
@@ -68,8 +69,30 @@ public class DAOProductoddbbMySQL extends DAOComercioddbbMySQL implements DAOPro
 
 	@Override
 	public Producto buscarPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Producto producto = null;
+		ResultSet rs = null;
+		try {
+			psBuscarPorId = con.prepareStatement(BUSCAR_POR_ID);
+			psBuscarPorId.setInt(1, id);
+			rs = psBuscarPorId.executeQuery();
+
+			if (rs.next()) {
+				producto = new Producto();
+
+				producto.setID(rs.getInt("id"));
+				producto.setNombre(rs.getString("nombre"));
+				producto.setPrecio(rs.getBigDecimal("precio"));
+				producto.setDescripcion(rs.getString("descripcion"));
+				producto.setUrl_producto_img(rs.getString("url_producto_img"));
+			}
+
+		} catch (SQLException e) {
+			throw new DAOBaseDeDatosException("Error en findById", e);
+		} finally {
+			cerrar(psBuscarPorId, rs);
+		}
+
+		return producto;
 	}
 
 	@Override
