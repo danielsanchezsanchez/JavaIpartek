@@ -10,20 +10,27 @@
 		<tr>
 			<td>
 				<form action="controladorMenuUsuarios" method="post">
+					<input type="hidden" name="id" value="${articulo.producto.ID}"/>
 					<input type="text" name="nombre" value="${articulo.producto.nombre}" /> 
 					<input type="number" name="cantidad" value="${articulo.cantidad}" />
-					<input type="submit" value="Guardar en carrito" />
+					<input type="submit" name="op" value="Modificar" />
+					<input type="submit" name="op" value="Borrar" />
 				</form>
 			</td>
 		</tr>
 	</c:forEach>
 </table>
 <div>
-	<a
-		href="controladorMenuUsuarios?op=seguirComprando&ruta=estabaViendoElCarrito">-
-		Ver la tienda -</a>
+	<a onclick="return confirm('¿Comprar? - ¡¡¡¡ESTAS USANDO DINERO REAL!!!! - ');"
+		id="botonAceptarCompra"
+		href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=aceptarCompra">-
+		ACEPTAR COMPRA -</a>
 </div>
 <div class="botonera">
+	<a id="botonVolverTienda"
+		href="controladorMenuUsuarios?op=seguirComprando&ruta=estabaViendoElCarrito">-
+		Ver la tienda -</a>
+
 	<a id="botonVolverMenu"
 		href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios">-
 		Volver al menu de cliente -</a>

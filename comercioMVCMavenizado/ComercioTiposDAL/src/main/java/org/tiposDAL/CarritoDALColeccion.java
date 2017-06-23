@@ -12,12 +12,17 @@ public class CarritoDALColeccion implements CarritoDAL {
 
 	@Override
 	public void aniadir(Articulo articulo) {
+
+		// Añado el producto en si con el id_producto para poder usarlo en el
+		// jsp
 		DAOProductoddbbMySQL DAOProducto = new DAOProductoddbbMySQL();
 		Producto producto = new Producto();
 		DAOProducto.abrirComercioddbb();
 		producto = DAOProducto.buscarPorId(articulo.getId_producto());
 		DAOProducto.cerrarComercioddbb();
 		Articulo articuloaniadir = new Articulo(articulo.getId_producto(), articulo.getCantidad(), producto);
+
+		// Añado el articulo
 		articulos.put(articuloaniadir.getId_producto(), articuloaniadir);
 
 	}
@@ -27,7 +32,18 @@ public class CarritoDALColeccion implements CarritoDAL {
 		if (!articulos.containsKey(articulo.getId_producto())) {
 			throw new CarritoDALException("Intento de modificar articulo no existente " + articulo);
 		}
-		articulos.put(articulo.getId_producto(), articulo);
+
+		// Añado el producto en si con el id_producto para poder usarlo en el
+		// jsp
+		DAOProductoddbbMySQL DAOProducto = new DAOProductoddbbMySQL();
+		Producto producto = new Producto();
+		DAOProducto.abrirComercioddbb();
+		producto = DAOProducto.buscarPorId(articulo.getId_producto());
+		DAOProducto.cerrarComercioddbb();
+		Articulo articuloaniadir = new Articulo(articulo.getId_producto(), articulo.getCantidad(), producto);
+
+		// Modifico el articulo
+		articulos.put(articuloaniadir.getId_producto(), articuloaniadir);
 
 	}
 
@@ -46,6 +62,15 @@ public class CarritoDALColeccion implements CarritoDAL {
 	@Override
 	public Articulo buscarUnArticuloPorIdProducto(int id_producto) {
 		return articulos.get(id_producto);
+	}
+
+	@Override
+	public boolean esCarritoVacio() {
+		if (articulos.size() == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

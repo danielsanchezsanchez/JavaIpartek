@@ -6,8 +6,19 @@ public class Usuario {
 	private String nickusuario, nombre, apellido1, apellido2, contrasenia, errores;
 
 	// Constructores
+
 	public Usuario() {
 
+	}
+
+	public Usuario(int id, int rol, String nickusuario, String nombre, String apellido1, String apellido2) {
+		super();
+		this.id = id;
+		this.rol = rol;
+		this.nickusuario = nickusuario;
+		this.nombre = nombre;
+		this.apellido1 = apellido1;
+		this.apellido2 = apellido2;
 	}
 
 	public Usuario(int id, String nombre, String nickusuario, String apellido1, String apellido2, String contrasenia) {
@@ -165,8 +176,7 @@ public class Usuario {
 	// To String
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", rol=" + rol + ", nombre=" + nombre + ", nickusuario=" + nickusuario + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", contrasenia=" + contrasenia
-				+ "]";
+		return "Usuario [id=" + id + ", rol=" + rol + ", nombre=" + nombre + ", nickusuario=" + nickusuario + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", contrasenia=" + contrasenia + "]";
 	}
 
 }

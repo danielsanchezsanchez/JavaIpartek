@@ -11,6 +11,7 @@
 	<form
 		action="${pageContext.request.contextPath}/admin/usuarioFORMAdmin"
 		method="post">
+		<input type="hidden" name="id" value="${usuario.id}"/>
 		<fieldset>
 			<label for="nickusuario">Nick del usuario:</label> <input
 				id="nickusuario" name="nickusuario" value="${usuario.nickusuario}"

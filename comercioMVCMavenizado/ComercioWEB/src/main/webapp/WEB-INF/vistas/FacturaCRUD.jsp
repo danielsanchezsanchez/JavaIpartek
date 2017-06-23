@@ -32,7 +32,7 @@
 </div>
 <div class="botonera">
 	<a id="botonIrMenuAdministrador"
-		href="ControladorMenuAdministradores">- Salir al menu de
+		href="controladorMenuAdministradores">- Salir al menu de
 		opciones de administrador -</a>
 </div>
 <%@ include file="includes/cabeceraAdministradores/pieAdmin.jsp"%>

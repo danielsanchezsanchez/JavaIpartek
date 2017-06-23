@@ -21,7 +21,7 @@ public class ControladorIndex extends HttpServlet {
 	static final String RUTA_INDEX = "/WEB-INF/vistas/index.jsp";
 	static final String RUTA_FORMULARIO_LOGIN = "/WEB-INF/vistas/usuarioLogin.jsp";
 	static final String RUTA_FORMULARIO_REGISTRO = "/WEB-INF/vistas/usuarioRegistro.jsp";
-	static final String RUTA_ADMINISTRADOR_LOGEADO = "admin/ControladorMenuAdministradores";
+	static final String RUTA_ADMINISTRADOR_LOGEADO = "admin/controladorMenuAdministradores";
 	static final String RUTA_USUARIO_LOGEADO = "usuarios/controladorMenuUsuarios";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

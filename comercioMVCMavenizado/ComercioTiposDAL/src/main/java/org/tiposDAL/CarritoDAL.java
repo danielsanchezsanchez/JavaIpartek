@@ -14,4 +14,6 @@ public interface CarritoDAL {
 
 	public Articulo buscarUnArticuloPorIdProducto(int id_producto);
 
+	public boolean esCarritoVacio();
+
 }

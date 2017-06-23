@@ -11,6 +11,7 @@ import org.tiposDeClases.Usuario;
 
 public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements DAOFacturaddbb {
 
+	private final static String BUSCAR_ULTIMA = "SELECT * FROM facturas";
 	private final static String BUSCAR_TODAS = "SELECT * FROM facturas";
 	private final static String BUSCAR_TODAS_CON_USUARIOS = "SELECT facturas.id, facturas.numero_factura, usuarios.nickusuario, facturas.fecha_compra FROM facturas, usuarios WHERE usuarios.id=facturas.id_usuario";
 	private final static String BUSCAR_POR_NUMERO = "SELECT * FROM facturas WHERE numero_factura LIKE ?";
@@ -18,7 +19,7 @@ public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements DAOFact
 	private final static String UPDATE = "UPDATE facturas " + "SET numero_factura = ?, id_usuario = ? " + "WHERE id = ?";
 	private final static String DELETE = "DELETE FROM facturas WHERE id = ?";
 
-	private PreparedStatement psBuscarTodas, psBuscarTodasConUsuarios, psBuscarPorNumero, psInsert, psUpdate, psDelete;
+	private PreparedStatement psBuscarTodas, psBuscarUltima, psBuscarTodasConUsuarios, psBuscarPorNumero, psInsert, psUpdate, psDelete;
 
 	private void cerrar(PreparedStatement ps) {
 		cerrar(ps, null);
@@ -35,6 +36,11 @@ public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements DAOFact
 		} catch (SQLException e) {
 			throw new DAOBaseDeDatosException("Error en Buscar todos", e);
 		}
+	}
+
+	@Override
+	public String buscarUltima() {
+		return "hola";
 	}
 
 	@Override
@@ -102,7 +108,7 @@ public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements DAOFact
 
 	@Override
 	public Factura buscarPorId(int id) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 

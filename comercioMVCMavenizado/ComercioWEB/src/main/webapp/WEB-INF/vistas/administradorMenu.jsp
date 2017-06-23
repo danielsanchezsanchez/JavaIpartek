@@ -8,21 +8,21 @@
 <div class="opcionesAdmin">
 		<h2 style="margin: 20px; border: '1';">
 		<a id="botonGestionUsuarios"
-		href="${pageContext.request.contextPath}/admin/ControladorMenuAdministradores?op=gestionUsuarios">-
+		href="${pageContext.request.contextPath}/admin/controladorMenuAdministradores?op=gestionUsuarios">-
 		Gestion de usuarios -</a> 
 		
 		<a id="botonGestionProductos"
-		href="${pageContext.request.contextPath}/admin/ControladorMenuAdministradores?op=gestionDeProductos">-
+		href="${pageContext.request.contextPath}/admin/controladorMenuAdministradores?op=gestionDeProductos">-
 		Gestion de productos -</a>
 		
 		<a id="botonGestionFacturas"
-		href="${pageContext.request.contextPath}/admin/ControladorMenuAdministradores?op=gestionDeFacturas">-
+		href="${pageContext.request.contextPath}/admin/controladorMenuAdministradores?op=gestionDeFacturas">-
 		Gestion de facturas -</a></h2>
 </div>
 
 <div class="botonera">
 	<a id="botonSalir" onclick="return confirm('¿Estás seguro de que quieres salir');"
-		href="${pageContext.request.contextPath}/admin/ControladorMenuAdministradores?op=desconectar">-
+		href="${pageContext.request.contextPath}/admin/controladorMenuAdministradores?op=desconectar">-
 		Volver al inicio -</a>
 </div>
 <%@ include file="includes/cabeceraAdministradores/pieAdmin.jsp"%>

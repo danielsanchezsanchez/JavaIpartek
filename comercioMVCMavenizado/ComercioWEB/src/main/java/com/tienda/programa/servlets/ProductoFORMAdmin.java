@@ -23,15 +23,14 @@ public class ProductoFORMAdmin extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String salir = request.getParameter("salir");
-		String op = request.getParameter("opform");
-
+		String op = request.getParameter("op");
 		if (salir != null) {
 			request.getRequestDispatcher(RUTA_ADMINISTRADOR_PRODUCTOCRUD).forward(request, response);
 			return;
 		}
 
 		DAOProductoddbbMySQL DAOProducto = new DAOProductoddbbMySQL();
-		Producto producto = new Producto(request.getParameter("nombre"), new BigDecimal(request.getParameter("precio")), request.getParameter("descripcion"), request.getParameter("url_producto_img"));
+		Producto producto = new Producto(Integer.parseInt(request.getParameter("id")), request.getParameter("nombre"), new BigDecimal(request.getParameter("precio")), request.getParameter("descripcion"), request.getParameter("url_producto_img"));
 
 		switch (op) {
 		case "modificar":

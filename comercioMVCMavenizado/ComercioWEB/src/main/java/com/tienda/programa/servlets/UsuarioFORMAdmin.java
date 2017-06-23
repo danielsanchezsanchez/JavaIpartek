@@ -30,8 +30,7 @@ public class UsuarioFORMAdmin extends HttpServlet {
 		}
 
 		DAOUsuarioddbbMySQL DAOUsuario = new DAOUsuarioddbbMySQL();
-		Usuario usuario = new Usuario(Integer.parseInt(request.getParameter("id_rol")), request.getParameter("nickusuario"), request.getParameter("nombre"), request.getParameter("apellido1"),
-				request.getParameter("apellido2"));
+		Usuario usuario = new Usuario(Integer.parseInt(request.getParameter("id")), Integer.parseInt(request.getParameter("id_rol")), request.getParameter("nickusuario"), request.getParameter("nombre"), request.getParameter("apellido1"), request.getParameter("apellido2"));
 
 		switch (op) {
 		case "modificar":

@@ -11,6 +11,7 @@
 	<form
 		action="${pageContext.request.contextPath}/admin/productoFORMAdmin"
 		method="post">
+		<input type="hidden" name="id" value="${producto.ID}"/>
 		<fieldset>
 			<label for="nombre">Nombre del producto:</label> <input
 				id="nombre" name="nombre" value="${producto.nombre}"
@@ -47,7 +48,7 @@
 			<input type="submit" name="salir" value="SALIR" />
 			<p class="errores">${producto.errores}</p>
 
-			<input type="hidden" name="opform" value="${param.op}" />
+			<input type="hidden" name="op" value="${param.op}" />
 		</fieldset>
 	</form>
 	<c:if test="${param.op == 'borrar'}">

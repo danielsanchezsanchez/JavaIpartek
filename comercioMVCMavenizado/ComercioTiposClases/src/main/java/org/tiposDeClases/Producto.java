@@ -10,6 +10,15 @@ public class Producto {
 
 	// Constructores
 
+	public Producto(int iD, String nombre, BigDecimal precio, String descripcion, String url_producto_img) {
+		super();
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.url_producto_img = url_producto_img;
+		ID = iD;
+		this.precio = precio;
+	}
+
 	public Producto(String nombre, int iD, BigDecimal precio, String descripcion) {
 		super();
 		this.nombre = nombre;

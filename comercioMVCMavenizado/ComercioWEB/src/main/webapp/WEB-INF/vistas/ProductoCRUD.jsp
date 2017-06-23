@@ -6,6 +6,7 @@
 <table border="1">
 	<thead>
 		<tr>
+			<th>ID</th>
 			<th>Nombre</th>
 			<th>Precio</th>
 			<th>Descripcion</th>
@@ -16,6 +17,7 @@
 	<tbody>
 		<c:forEach items="${requestScope.productos}" var="producto">
 			<tr>
+				<th>${producto.ID}</th>
 				<td>${producto.nombre}</td>
 				<td>${producto.precio}</td>
 				<td>${producto.descripcion}</td>
@@ -34,7 +36,7 @@
 </div>
 <div class="botonera">
 	<a id="botonIrMenuAdministrador"
-		href="ControladorMenuAdministradores">- Salir al menu de
+		href="controladorMenuAdministradores">- Salir al menu de
 		opciones de administrador -</a>
 </div>
 <%@ include file="includes/cabeceraAdministradores/pieAdmin.jsp"%>
