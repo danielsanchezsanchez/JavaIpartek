@@ -41,8 +41,4 @@
 		href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=desconectar">-
 		Volver al inicio -</a>
 </div>
-
-<script>
-	cantidator();
-</script>
 <%@ include file="includes/cabeceraUsuario/pieUsuario.jsp"%>

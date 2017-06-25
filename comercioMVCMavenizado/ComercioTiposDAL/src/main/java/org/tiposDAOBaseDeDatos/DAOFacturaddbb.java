@@ -11,6 +11,8 @@ public interface DAOFacturaddbb extends DAOComercioddbb {
 	public Factura[] buscarTodasConUsuarios();
 
 	public Factura buscarPorId(int id);
+	
+	public Factura[] buscarTodasPorUsuario(int id_usuario);
 
 	public Factura buscarPorNumero(String numero_factura);
 

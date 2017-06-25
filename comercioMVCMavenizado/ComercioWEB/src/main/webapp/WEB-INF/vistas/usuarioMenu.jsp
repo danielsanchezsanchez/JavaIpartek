@@ -8,9 +8,12 @@
 	<div class="opcionesAdmin">
 		<h2 style="margin: 20px; border: '1';">
 		
-		<a id="botonIrAlCarritoUsuarios"
+		<a id="botonIrALaTienda"
 		href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=comenzarAComprar">-
 		Comenzar una compra -</a> 
+		<a id="botonIrALosHistoricosDeCompra"
+		href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=verHistoricos">-
+		Ver tus compras -</a> 
 		
 		</h2>
 </div>

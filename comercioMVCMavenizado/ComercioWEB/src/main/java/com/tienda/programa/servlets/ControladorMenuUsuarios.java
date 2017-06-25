@@ -10,13 +10,18 @@ import javax.servlet.http.HttpSession;
 
 import org.tiposDAL.CarritoDAL;
 import org.tiposDAL.CarritoDALFactory;
+import org.tiposDAOBaseDeDatos.DAOFactura_Productoddbb;
+import org.tiposDAOBaseDeDatos.DAOFactura_ProductoddbbMySQL;
+import org.tiposDAOBaseDeDatos.DAOFacturaddbb;
 import org.tiposDAOBaseDeDatos.DAOFacturaddbbMySQL;
 import org.tiposDAOBaseDeDatos.DAOProductoddbb;
 import org.tiposDAOBaseDeDatos.DAOProductoddbbMySQL;
 import org.tiposDAOBaseDeDatos.DAOUsuarioddbb;
 import org.tiposDAOBaseDeDatos.DAOUsuarioddbbMySQL;
 import org.tiposDeClases.Articulo;
+import org.tiposDeClases.Factura;
 import org.tiposDeClases.Producto;
+import org.tiposDeClases.Usuario;
 
 public class ControladorMenuUsuarios extends HttpServlet {
 
@@ -24,34 +29,40 @@ public class ControladorMenuUsuarios extends HttpServlet {
 	static final String RUTA_MENU_USUARIO = "/WEB-INF/vistas/usuarioMenu.jsp";
 	static final String RUTA_MENU_USUARIO_COMPRANDO = "/WEB-INF/vistas/usuarioComprando.jsp";
 	static final String RUTA_MENU_USUARIO_CARRITO = "/WEB-INF/vistas/usuarioCarrito.jsp";
+	static final String RUTA_MENU_USUARIO_HISTORICO = "/WEB-INF/vistas/usuarioHistoricoFacturas.jsp";
+	static final String RUTA_MENU_FACTURAS_PRODUCTOS = "/WEB-INF/vistas/usuarioFacturasProductos.jsp";
 	static final String RUTA_INDEX = "/WEB-INF/vistas/index.jsp";
 	static final String RUTA_SEGUIR_COMPRANDO = "controladorMenuUsuarios?op=seguirComprando";
 	static final String RUTA_COMENZAR_NUEVA_COMPRA = "controladorMenuUsuarios?op=comenzarAComprar";
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// Abrimos sesion
+		HttpSession sesion = request.getSession();
 
 		// Controlamos las opciones
 		String op = request.getParameter("op");
 
 		// Obtenemos el id del usuario conectado
-		String nick = request.getParameter("nickusuario");
+		Usuario nick = (Usuario) sesion.getAttribute("usuario");
+		String nickusuario = nick.getNickusuario();
 		DAOUsuarioddbb usuarioDB = new DAOUsuarioddbbMySQL();
 		usuarioDB.abrirComercioddbb();
-		int id_usuario = usuarioDB.buscarElId(nick);
+		int id_usuario = usuarioDB.buscarElId(nickusuario);
 		usuarioDB.cerrarComercioddbb();
 
 		DAOProductoddbb productoDB = new DAOProductoddbbMySQL();
 		Articulo articulo;
 
-		HttpSession sesion = request.getSession();
-
 		// Primera vez que accede
 		if (op == null) {
-			request.getRequestDispatcher(RUTA_MENU_USUARIO).forward(request, response);
+			request.getRequestDispatcher(RUTA_MENU_USUARIO).forward(request,
+					response);
 			return;
 		}
 
@@ -62,7 +73,8 @@ public class ControladorMenuUsuarios extends HttpServlet {
 			switch (op) {
 			case "desconectar":
 				sesion.invalidate();
-				request.getRequestDispatcher(RUTA_INDEX).forward(request, response);
+				request.getRequestDispatcher(RUTA_INDEX).forward(request,
+						response);
 				return;
 
 			case "comenzarAComprar":
@@ -78,10 +90,12 @@ public class ControladorMenuUsuarios extends HttpServlet {
 
 					// Mando los productos
 					request.setAttribute("productos", productos);
-					request.getRequestDispatcher(RUTA_MENU_USUARIO_COMPRANDO).forward(request, response);
+					request.getRequestDispatcher(RUTA_MENU_USUARIO_COMPRANDO)
+							.forward(request, response);
 
 				} else {
-					response.sendRedirect(request.getContextPath() + RUTA_SEGUIR_COMPRANDO);
+					response.sendRedirect(request.getContextPath()
+							+ RUTA_SEGUIR_COMPRANDO);
 
 				}
 
@@ -98,8 +112,10 @@ public class ControladorMenuUsuarios extends HttpServlet {
 
 					} else {
 						// Si ha comprado algo lo guardamos AQUI
-						int id_producto = Integer.parseInt(request.getParameter("id"));
-						int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+						int id_producto = Integer.parseInt(request
+								.getParameter("id"));
+						int cantidad = Integer.parseInt(request
+								.getParameter("cantidad"));
 						articulo = new Articulo(id_producto, cantidad);
 						carrito = (CarritoDAL) sesion.getAttribute("carrito");
 
@@ -108,21 +124,20 @@ public class ControladorMenuUsuarios extends HttpServlet {
 
 							// Si no lo tiene, añado el articulo al carrito
 							// En la session ofc
-							carrito = (CarritoDAL) sesion.getAttribute("carrito");
+							carrito = (CarritoDAL) sesion
+									.getAttribute("carrito");
 							carrito.aniadir(articulo);
 							sesion.setAttribute("carrito", carrito);
 						} else {
 							// Si ya lo tiene lo modifico
-							carrito = (CarritoDAL) sesion.getAttribute("carrito");
-							articulo.setCantidad(cantidad + carrito.buscarUnArticuloPorIdProducto(id_producto).getCantidad());
+							carrito = (CarritoDAL) sesion
+									.getAttribute("carrito");
+							articulo.setCantidad(cantidad
+									+ carrito.buscarUnArticuloPorIdProducto(
+											id_producto).getCantidad());
 							carrito.modificar(articulo);
 							sesion.setAttribute("carrito", carrito);
 						}
-
-						// Mostrar el contenido del carrito
-						// for (Articulo articulo2 :
-						// carrito.buscarTodosLosArticulos())
-						// System.out.println(articulo2);
 					}
 				}
 
@@ -134,20 +149,24 @@ public class ControladorMenuUsuarios extends HttpServlet {
 
 				// Mando los productos
 				request.setAttribute("productos", productosSeguir);
-				request.getRequestDispatcher(RUTA_MENU_USUARIO_COMPRANDO).forward(request, response);
+				request.getRequestDispatcher(RUTA_MENU_USUARIO_COMPRANDO)
+						.forward(request, response);
 				return;
 			case "verCarrito":
 
 				// Mando el carrito
 				carrito = (CarritoDAL) sesion.getAttribute("carrito");
-				request.setAttribute("articulos", carrito.buscarTodosLosArticulos());
-				request.getRequestDispatcher(RUTA_MENU_USUARIO_CARRITO).forward(request, response);
+				request.setAttribute("articulos",
+						carrito.buscarTodosLosArticulos());
+				request.getRequestDispatcher(RUTA_MENU_USUARIO_CARRITO)
+						.forward(request, response);
 				return;
 
 			case "Modificar":
 				// Si ha modificado algo lo guardamos AQUI
 				int id_producto = Integer.parseInt(request.getParameter("id"));
-				int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+				int cantidad = Integer.parseInt(request
+						.getParameter("cantidad"));
 				articulo = new Articulo(id_producto, cantidad);
 
 				// Modifico el articulo en el carrito
@@ -156,30 +175,32 @@ public class ControladorMenuUsuarios extends HttpServlet {
 				carrito.modificar(articulo);
 				sesion.setAttribute("carrito", carrito);
 
-				// Mostrar el contenido del carrito
-				for (Articulo articulo2 : carrito.buscarTodosLosArticulos())
-					System.out.println(articulo2);
-
 				// Mando el carrito
 				carrito = (CarritoDAL) sesion.getAttribute("carrito");
-				request.setAttribute("articulos", carrito.buscarTodosLosArticulos());
-				request.getRequestDispatcher(RUTA_MENU_USUARIO_CARRITO).forward(request, response);
+				request.setAttribute("articulos",
+						carrito.buscarTodosLosArticulos());
+				request.getRequestDispatcher(RUTA_MENU_USUARIO_CARRITO)
+						.forward(request, response);
 				return;
 
 			case "Borrar":
 
 				// Si quiere borrar un articulo cojemos el id del articulo
 				// (producto)
-				int id_productoBorrar = Integer.parseInt(request.getParameter("id"));
+				int id_productoBorrar = Integer.parseInt(request
+						.getParameter("id"));
 				carrito = (CarritoDAL) sesion.getAttribute("carrito");
-				articulo = carrito.buscarUnArticuloPorIdProducto(id_productoBorrar);
+				articulo = carrito
+						.buscarUnArticuloPorIdProducto(id_productoBorrar);
 				// Borramos
 				carrito.borrar(articulo);
 
 				// Mando el carrito
 				carrito = (CarritoDAL) sesion.getAttribute("carrito");
-				request.setAttribute("articulos", carrito.buscarTodosLosArticulos());
-				request.getRequestDispatcher(RUTA_MENU_USUARIO_CARRITO).forward(request, response);
+				request.setAttribute("articulos",
+						carrito.buscarTodosLosArticulos());
+				request.getRequestDispatcher(RUTA_MENU_USUARIO_CARRITO)
+						.forward(request, response);
 				return;
 
 			case "aceptarCompra":
@@ -188,15 +209,85 @@ public class ControladorMenuUsuarios extends HttpServlet {
 
 				// Creamos la factura
 				DAOFacturaddbbMySQL DAOFactura = new DAOFacturaddbbMySQL();
-				// DAOFactura.
-				// Factura factura = new Factura("DENDA" + , id_usuario);
+				DAOFactura.abrirComercioddbb();
+
+				// Buscamos la ultima factura
+				String DENDA = DAOFactura.buscarUltima();
+				String DENDASSTRG = DENDA.substring(5);
+				int DENDANUMERO = Integer.parseInt(DENDASSTRG) + 1;
+				DENDASSTRG = String.valueOf(DENDANUMERO);
+
+				// Le damos formato "DENDA-------1 ... etc"
+				int NUMEROCEROS = 8 - DENDASSTRG.length();
+				for (int i = NUMEROCEROS; i > 0; i--) {
+					DENDASSTRG = "0" + DENDASSTRG;
+				}
+				DENDASSTRG = "DENDA" + DENDASSTRG;
+				System.out.println(DENDASSTRG);
+
+				// Creamos la factura
+				Factura factura = new Factura(DENDASSTRG, id_usuario);
+				int claveFacturaGenerada;
+
+				claveFacturaGenerada = DAOFactura.insert(factura);
 
 				// Introducimos las lineas de factura-productos
+				DAOFactura_ProductoddbbMySQL DAOFac_Pro = new DAOFactura_ProductoddbbMySQL();
+				Articulo articuloFacPro;
+				DAOFac_Pro.abrirComercioddbb();
+				for (Articulo articulosParaFacturasProductos : carrito
+						.buscarTodosLosArticulos()) {
+					articuloFacPro=new Articulo(claveFacturaGenerada, articulosParaFacturasProductos.getId_producto(),articulosParaFacturasProductos.getCantidad());
+					DAOFac_Pro.insert(articuloFacPro);
+				}
+				
+				// Cerramos las ddbb
+				DAOFac_Pro.cerrarComercioddbb();
+				DAOFactura.cerrarComercioddbb();
 
 				// Redirigo a comenzar compra tras vaciar el carrito
 				carrito = CarritoDALFactory.getCarritoDAL();
 				sesion.setAttribute("carrito", carrito);
-				response.sendRedirect(request.getContextPath() + RUTA_COMENZAR_NUEVA_COMPRA);
+				request.getRequestDispatcher(RUTA_MENU_USUARIO).forward(request,
+						response);
+				return;
+			
+			case "verHistoricos":
+				
+				//Cargo todas las facturas de un usuario
+				DAOFacturaddbb DAOFacturaHistorica = new DAOFacturaddbbMySQL();
+				DAOFacturaHistorica.abrirComercioddbb();
+				
+				//Cargamos las facturas del usuario logeado para enviarselas al jsp
+				Factura[] facturaHistoricos;
+				facturaHistoricos = DAOFacturaHistorica.buscarTodasPorUsuario(id_usuario);
+				request.setAttribute("facturaHistoricos", facturaHistoricos);
+				
+				//Cerramos la ddbb 
+				DAOFacturaHistorica.cerrarComercioddbb();
+				
+				request.getRequestDispatcher(RUTA_MENU_USUARIO_HISTORICO).forward(request,
+						response);
+				return;
+				
+			case "Ver factura":
+				//Recojemos el id_factura
+				int id_factura = Integer.parseInt(request.getParameter("id_factura"));
+				
+				//Recojemos las filas de facturas-productos con ese id_factura
+				//Cargo todas las facturas de un usuario
+				DAOFactura_Productoddbb DAOFac_ProdFila = new DAOFactura_ProductoddbbMySQL();
+				DAOFac_ProdFila.abrirComercioddbb();
+				
+				//Cargamos las facturas del usuario logeado para enviarselas al jsp
+				Articulo[] articuloHistoricos;
+				articuloHistoricos = DAOFac_ProdFila.buscarTodasPorFactura(id_factura);
+				request.setAttribute("articulos_Factura", articuloHistoricos);
+				
+				//Cerramos la ddbb 
+				DAOFac_ProdFila.cerrarComercioddbb();
+				request.getRequestDispatcher(RUTA_MENU_FACTURAS_PRODUCTOS).forward(request,
+						response);
 				return;
 			}
 		}

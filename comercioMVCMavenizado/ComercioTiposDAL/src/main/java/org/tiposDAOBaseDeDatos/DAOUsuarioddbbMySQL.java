@@ -84,7 +84,7 @@ public class DAOUsuarioddbbMySQL extends DAOComercioddbbMySQL implements DAOUsua
 		} catch (SQLException e) {
 			throw new DAOBaseDeDatosException("Error en findById", e);
 		} finally {
-			cerrar(psBuscarPorNick, rs);
+			cerrar(psBuscarElId, rs);
 		}
 
 		return i;

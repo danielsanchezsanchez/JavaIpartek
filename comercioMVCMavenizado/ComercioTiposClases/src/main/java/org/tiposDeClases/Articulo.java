@@ -2,10 +2,17 @@ package org.tiposDeClases;
 
 public class Articulo {
 
-	private int id_producto, cantidad;
+	private int id_factura, id_producto, cantidad;
 	private Producto producto;
 
 	// Constructores
+	public Articulo(int id_factura, int id_producto, int cantidad) {
+		super();
+		this.id_producto = id_producto;
+		this.cantidad = cantidad;
+		this.id_factura = id_factura;
+	}
+	
 	public Articulo(int id_producto, int cantidad, Producto producto) {
 		super();
 		this.id_producto = id_producto;
@@ -47,6 +54,14 @@ public class Articulo {
 
 	public void setProducto(Producto producto) {
 		this.producto = producto;
+	}
+
+	public int getId_factura() {
+		return id_factura;
+	}
+
+	public void setId_factura(int id_factura) {
+		this.id_factura = id_factura;
 	}
 
 	// To String
