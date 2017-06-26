@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-06-2017 a las 20:00:53
+-- Tiempo de generación: 26-06-2017 a las 20:08:27
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -19,29 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `comercioddbb`
 --
-CREATE DATABASE IF NOT EXISTS `comercioddbb` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
-USE `comercioddbb`;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `factura-productos`
---
-
-DROP TABLE IF EXISTS `factura-productos`;
-CREATE TABLE `factura-productos` (
-  `id_facturas` int(11) NOT NULL,
-  `id_productos` int(11) NOT NULL,
-  `cantidad` int(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `factura-productos`
---
-
-INSERT INTO `factura-productos` (`id_facturas`, `id_productos`, `cantidad`) VALUES
-(2, 1, 3),
-(5, 6, 2);
 
 -- --------------------------------------------------------
 
@@ -62,12 +39,52 @@ CREATE TABLE `facturas` (
 --
 
 INSERT INTO `facturas` (`id`, `numero_factura`, `id_usuario`, `fecha_compra`) VALUES
-(2, 'DENDA0001', 1, '2017-06-20 14:42:58'),
-(3, 'DENDA0002', 8, '2017-06-20 14:43:20'),
-(4, 'DENDA0003', 2, '2017-06-20 14:43:27'),
-(5, 'DENDA0007', 2, '2017-06-20 16:19:09'),
-(9, 'DENDA00008', 6, '2017-06-20 16:28:07'),
-(10, 'DENDA0009', 8, '2017-06-20 17:01:49');
+(1, 'DENDA00000001', 2, '2017-06-23 17:53:21'),
+(2, 'DENDA00000002', 2, '2017-06-26 12:54:47'),
+(3, 'DENDA00000003', 2, '2017-06-26 13:04:11'),
+(4, 'DENDA00000004', 7, '2017-06-26 13:25:29'),
+(5, 'DENDA00000005', 7, '2017-06-26 13:26:02'),
+(6, 'DENDA00000006', 7, '2017-06-26 13:36:58'),
+(7, 'DENDA00000007', 2, '2017-06-26 13:38:25'),
+(8, 'DENDA00000008', 6, '2017-06-26 13:42:02'),
+(9, 'DENDA00000009', 6, '2017-06-26 13:46:37'),
+(10, 'DENDA00000010', 13, '2017-06-26 15:14:59');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `factura_productos`
+--
+
+DROP TABLE IF EXISTS `factura_productos`;
+CREATE TABLE `factura_productos` (
+  `id_factura` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci ROW_FORMAT=COMPACT;
+
+--
+-- Volcado de datos para la tabla `factura_productos`
+--
+
+INSERT INTO `factura_productos` (`id_factura`, `id_producto`, `cantidad`) VALUES
+(1, 1, 6),
+(4, 1, 4),
+(4, 6, 0),
+(4, 13, 0),
+(5, 4, 2),
+(5, 7, 2),
+(6, 1, 3),
+(6, 6, 2),
+(7, 1, 4),
+(7, 6, 3),
+(8, 1, 5),
+(8, 4, 4),
+(8, 7, 4),
+(9, 1, 4),
+(9, 7, 3),
+(10, 4, 1),
+(10, 6, 2);
 
 -- --------------------------------------------------------
 
@@ -91,9 +108,10 @@ CREATE TABLE `productos` (
 INSERT INTO `productos` (`id`, `nombre`, `precio`, `descripcion`, `url_producto_img`) VALUES
 (1, 'Mesa', '50.30', 'Mesa cuadrada bonita.', NULL),
 (4, 'Silla', '20.00', 'Silla redonda feA.', NULL),
-(6, 'DFGFDGDFG', '20.00', 'FGHFGHFGHGHG', NULL),
-(7, 'Cuaderno', '7.23', 'Cuaderno de anillas pro', '.......................'),
-(8, 'Boligrafo', '2.50', 'Boli bic ', '');
+(6, 'Auriculares', '2.10', 'Blancos y negros', ''),
+(7, 'Cuaderno', '7.23', 'Cuaderno de anillas pro', ''),
+(8, 'Boligrafo', '2.50', 'Boli bic ', ''),
+(13, 'Sillon', '62.30', 'Masajeador opcional.', '');
 
 -- --------------------------------------------------------
 
@@ -142,19 +160,14 @@ INSERT INTO `usuarios` (`id`, `id_rol`, `nickusuario`, `nombre`, `apellido1`, `a
 (2, 2, 'gudy20', 'Daniel', 'Sanchez', 'Sanchez', 'sua20'),
 (6, 2, 'javitxu', 'javier', 'lete', 'lete2', 'letazo'),
 (7, 2, 'troll', 'trolete', 'trolero', 'trolazo', 'troll'),
-(8, 2, 'danielete', 'daniel', 'sanchez', 'sanchez', 'iratxe12345'),
-(9, 2, 'WEI20', 'manolo', 'txurrus', 'txurrus', '12345678');
+(8, 2, 'danielito', 'daniel', 'sanchez', 'sanchez', 'iratxe12345'),
+(10, 1, 'admin2', 'admin2', 'admin2', 'admin2', 'pass2'),
+(11, 2, 'DANILOLU', 'capullo', 'mayor', 'capullinson', '123456'),
+(13, 2, 'mikel', 'mikel', 'mikel', 'mikel', 'mikel');
 
 --
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `factura-productos`
---
-ALTER TABLE `factura-productos`
-  ADD KEY `id_facturas` (`id_facturas`),
-  ADD KEY `id_productos` (`id_productos`);
 
 --
 -- Indices de la tabla `facturas`
@@ -165,12 +178,19 @@ ALTER TABLE `facturas`
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
+-- Indices de la tabla `factura_productos`
+--
+ALTER TABLE `factura_productos`
+  ADD KEY `id_facturas` (`id_factura`),
+  ADD KEY `id_productos` (`id_producto`);
+
+--
 -- Indices de la tabla `productos`
 --
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `iu_nombre` (`nombre`),
-  ADD UNIQUE KEY `iu_url_producto_img` (`url_producto_img`);
+  ADD UNIQUE KEY `iu_nombre` (`nombre`);
+ALTER TABLE `productos` ADD FULLTEXT KEY `nombre` (`nombre`);
 
 --
 -- Indices de la tabla `roles`
@@ -200,7 +220,7 @@ ALTER TABLE `facturas`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
@@ -210,23 +230,23 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `factura-productos`
---
-ALTER TABLE `factura-productos`
-  ADD CONSTRAINT `factura-productos_ibfk_1` FOREIGN KEY (`id_facturas`) REFERENCES `facturas` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `factura-productos_ibfk_2` FOREIGN KEY (`id_productos`) REFERENCES `productos` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `facturas`
 --
 ALTER TABLE `facturas`
   ADD CONSTRAINT `facturas_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `factura_productos`
+--
+ALTER TABLE `factura_productos`
+  ADD CONSTRAINT `factura_productos_ibfk_1` FOREIGN KEY (`id_factura`) REFERENCES `facturas` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `factura_productos_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuarios`
