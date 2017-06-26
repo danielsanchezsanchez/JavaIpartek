@@ -18,17 +18,17 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach items="${requestScope.productos}" var="producto">
+		<c:forEach items="${requestScope.articulos}" var="articulo">
 			<tr>
-				<td>${producto.ID}</td>
-				<td>${producto.nombre}</td>
-				<td>${producto.precio}&euro;</td>
-				<td>${producto.descripcion}</td>
+				<td>${articulo.producto.ID}</td>
+				<td>${articulo.producto.nombre}</td>
+				<td>${articulo.producto.precio}&euro;</td>
+				<td>${articulo.producto.descripcion}</td>
 				<td>Imagen en proceso</td>
 				<td>Cantidad: <input min="0" max="100" style="width: 3em"
-					type="number" value='1' name="cantidad"></td>
+					type="number" value='${articulo.cantidad}' name="cantidad"></td>
 				<td><a
-					href="controladorMenuUsuarios?op=seguirComprando&id=${producto.ID}&cantidad=">-
+					href="controladorMenuUsuarios?op=seguirComprando&id=${articulo.producto.ID}&cantidad=">-
 						Añadir a la compra -</a></td>
 			</tr>
 		</c:forEach>

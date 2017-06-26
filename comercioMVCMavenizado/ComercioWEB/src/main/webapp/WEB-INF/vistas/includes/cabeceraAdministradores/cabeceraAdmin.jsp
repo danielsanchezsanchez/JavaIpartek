@@ -16,7 +16,7 @@
 		<div id="loginCasilla">
 			<div id="loginCasilla">
 				<label id="logeadoboton">- Bienvenido:
-					${fn:toUpperCase(usuario.nickusuario)} - |</label> <a id="desconectarboton"
+					${fn:toUpperCase(sessionScope.usuario.nickusuario)} - |</label> <a id="desconectarboton"
 					onclick="return confirm('¿Estás seguro de que quieres salir');"
 					href="${pageContext.request.contextPath}/admin/controladorMenuAdministradores?op=desconectar">-
 					Desconectar -</a>

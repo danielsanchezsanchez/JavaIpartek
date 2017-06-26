@@ -6,6 +6,12 @@
 <h2 style="margin: 20px;">Listado de Facturas:</h2>
 
 <table>
+	<tr>
+		<td>
+			<input type="text" readonly="readonly" value=${fn:toUpperCase("Numero de factura")}>
+			<input type="text" readonly="readonly" value=${fn:toUpperCase("Fecha")}>
+		</td>
+	</tr>
 	<c:forEach items="${requestScope.facturaHistoricos}" var="factura">
 		<tr>
 			<td>

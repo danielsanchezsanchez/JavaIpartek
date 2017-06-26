@@ -7,15 +7,13 @@ import java.util.ArrayList;
 
 import org.tiposDeClases.Articulo;
 
-public class DAOFactura_ProductoddbbMySQL extends DAOComercioddbbMySQL implements
-DAOFactura_Productoddbb{
-	
-	private final static String INSERT = "INSERT INTO facturas_productos (id_factura, id_producto, cantidad)"+ " VALUES (?, ?, ?)";
-	private final static String BUSCAR_POR_IDFACTURA = "SELECT * FROM facturas_productos WHERE id_factura LIKE ?";
-	
+public class DAOFactura_ProductoddbbMySQL extends DAOComercioddbbMySQL implements DAOFactura_Productoddbb {
+
+	private final static String INSERT = "INSERT INTO factura_productos (id_factura, id_producto, cantidad)" + " VALUES (?, ?, ?)";
+	private final static String BUSCAR_POR_IDFACTURA = "SELECT * FROM factura_productos WHERE id_factura LIKE ?";
+
 	private PreparedStatement psInsert, psBuscarPorIdFactura;
-	
-	
+
 	private void cerrar(PreparedStatement ps) {
 		cerrar(ps, null);
 	}
@@ -32,7 +30,7 @@ DAOFactura_Productoddbb{
 			throw new DAOBaseDeDatosException("Error en Buscar todos", e);
 		}
 	}
-	
+
 	@Override
 	public Articulo[] buscarTodasPorFactura(int id_factura) {
 		ArrayList<Articulo> articulos = new ArrayList<Articulo>();
@@ -54,14 +52,14 @@ DAOFactura_Productoddbb{
 			}
 
 		} catch (SQLException e) {
-			throw new DAOBaseDeDatosException("Error en findById", e);
+			throw new DAOBaseDeDatosException("Error en buscarTodasPorFactura", e);
 		} finally {
 			cerrar(psBuscarPorIdFactura, rs);
 		}
 
 		return articulos.toArray(new Articulo[articulos.size()]);
 	}
-	
+
 	@Override
 	public void insert(Articulo articulo) {
 		try {
@@ -75,8 +73,7 @@ DAOFactura_Productoddbb{
 			int res = psInsert.executeUpdate();
 
 			if (res != 1) {
-				throw new DAOBaseDeDatosException(
-						"La inserción ha devuelto un valor " + res);
+				throw new DAOBaseDeDatosException("La inserción ha devuelto un valor " + res);
 			}
 
 		} catch (SQLException e) {
@@ -89,13 +86,13 @@ DAOFactura_Productoddbb{
 	@Override
 	public void update(Articulo articulo) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete(Articulo articulo) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -6,12 +6,20 @@
 <h2 style="margin: 20px;">Listado del carrito: productos cogidos</h2>
 
 <table>
+	<tr>
+		<td>
+			<input type="text" readonly="readonly" value=${fn:toUpperCase("Nombre")}>
+			<input type="text" readonly="readonly" value=${fn:toUpperCase("Precio")}>
+			<input type="text" readonly="readonly" value=${fn:toUpperCase("Cantidad")}>
+		</td>
+	</tr>
 	<c:forEach items="${requestScope.articulos}" var="articulo">
 		<tr>
 			<td>
 				<form action="controladorMenuUsuarios" method="post">
 					<input type="hidden" name="id" value="${articulo.producto.ID}"/>
 					<input type="text" name="nombre" value="${articulo.producto.nombre}" /> 
+					<input type="text" name="nombre" value="${articulo.producto.precio}" />
 					<input type="number" name="cantidad" value="${articulo.cantidad}" />
 					<input type="submit" name="op" value="Modificar" />
 					<input type="submit" name="op" value="Borrar" />

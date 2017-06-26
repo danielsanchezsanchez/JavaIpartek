@@ -12,7 +12,13 @@ public class Articulo {
 		this.cantidad = cantidad;
 		this.id_factura = id_factura;
 	}
-	
+
+	public Articulo(int cantidad, Producto producto) {
+		super();
+		this.cantidad = cantidad;
+		this.producto = producto;
+	}
+
 	public Articulo(int id_producto, int cantidad, Producto producto) {
 		super();
 		this.id_producto = id_producto;
