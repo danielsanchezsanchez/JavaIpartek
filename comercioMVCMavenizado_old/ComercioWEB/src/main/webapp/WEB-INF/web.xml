@@ -73,20 +73,6 @@
     <servlet-name>FacturaFORMAdmin</servlet-name>
     <servlet-class>com.tienda.programa.servlets.FacturaFORMAdmin</servlet-class>
   </servlet>
-  <servlet>
-    <description>
-  	</description>
-    <display-name>StockCRUD</display-name>
-    <servlet-name>StockCRUD</servlet-name>
-    <servlet-class>com.tienda.programa.servlets.StockCRUD</servlet-class>
-  </servlet>
-  <servlet>
-    <description>
-  	</description>
-    <display-name>StockFORMAdmin</display-name>
-    <servlet-name>StockFORMAdmin</servlet-name>
-    <servlet-class>com.tienda.programa.servlets.StockFORMAdmin</servlet-class>
-  </servlet>
   <servlet-mapping>
     <servlet-name>ControladorIndex</servlet-name>
     <url-pattern>/controladorIndex</url-pattern>
@@ -119,16 +105,8 @@
     <servlet-name>FacturaCRUD</servlet-name>
     <url-pattern>/admin/facturaCRUD</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
+    <servlet-mapping>
     <servlet-name>FacturaFORMAdmin</servlet-name>
     <url-pattern>/admin/facturaFORMAdmin</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>StockCRUD</servlet-name>
-    <url-pattern>/admin/stockCRUD</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>StockFORMAdmin</servlet-name>
-    <url-pattern>/admin/stockFORMAdmin</url-pattern>
   </servlet-mapping>
 </web-app>

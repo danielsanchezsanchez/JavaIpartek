@@ -40,8 +40,7 @@ public class ControladorMenuUsuarios extends HttpServlet {
 	}
 
 	@SuppressWarnings("unused")
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Abrimos sesion
 		HttpSession sesion = request.getSession();
 
@@ -117,17 +116,14 @@ public class ControladorMenuUsuarios extends HttpServlet {
 
 			case "seguirComprando":
 				String ruta = request.getParameter("ruta");
-
+				cantidad = Integer.parseInt(request.getParameter("cantidad"));
 				// Si estoy viendo los productos no guardo nada
 				if (ruta != null) {
 
 				} else {
-					
 					if (request.getParameter("id") == null) {
 
 					} else {
-						cantidad = Integer.parseInt(request.getParameter("cantidad"));
-						
 						// Si ha comprado algo lo guardamos AQUI
 						int id_producto = Integer.parseInt(request.getParameter("id"));
 						articulo = new Articulo(id_producto, cantidad);
@@ -137,20 +133,14 @@ public class ControladorMenuUsuarios extends HttpServlet {
 						if (carrito.buscarUnArticuloPorIdProducto(id_producto) == null) {
 
 							// Si no lo tiene, añado el articulo al carrito
-							// En la session ofc, excepto que la cantidad sea
-							// cero.
-							if (cantidad == 0) {
-
-							} else {
-								carrito = (CarritoDAL) sesion.getAttribute("carrito");
-								carrito.aniadir(articulo);
-								sesion.setAttribute("carrito", carrito);
-							}
+							// En la session ofc
+							carrito = (CarritoDAL) sesion.getAttribute("carrito");
+							carrito.aniadir(articulo);
+							sesion.setAttribute("carrito", carrito);
 						} else {
 							// Si ya lo tiene lo modifico
 							carrito = (CarritoDAL) sesion.getAttribute("carrito");
-							articulo.setCantidad(cantidad
-									+ carrito.buscarUnArticuloPorIdProducto(id_producto).getCantidad());
+							articulo.setCantidad(cantidad + carrito.buscarUnArticuloPorIdProducto(id_producto).getCantidad());
 							carrito.modificar(articulo);
 							sesion.setAttribute("carrito", carrito);
 						}
@@ -171,19 +161,14 @@ public class ControladorMenuUsuarios extends HttpServlet {
 				for (int i = 0; i < productosSeguir.length; i++) {
 					Articulo articuloPorProducto = new Articulo();
 					articuloPorProducto.setProducto(productosSeguir[i]);
-					// Añadimos la cantidad de cada carrito
-					if (carrito.buscarUnArticuloPorIdProducto(articuloPorProducto.getProducto().getID()) != null) {
-						cantidadProducto = carrito.buscarUnArticuloPorIdProducto(
-								articuloPorProducto.getProducto().getID()).getCantidad();
-						articuloPorProducto.setCantidad(cantidadProducto);
 
-						// Si el producto no esta en el carrito cantidad=0
-					} else {
-						articuloPorProducto.setCantidad(0);
-					}
+					// Añadimos la cantidad de cada carrito
+					cantidadProducto = carrito.buscarUnArticuloPorIdProducto(articuloPorProducto.getId_producto()).getCantidad();
+					articuloPorProducto.setCantidad(cantidadProducto);
 
 					articulosSeguir[i] = articuloPorProducto;
 				}
+				articulosSeguir.toString();
 
 				// Mando los productos
 				request.setAttribute("articulos", articulosSeguir);
@@ -265,9 +250,7 @@ public class ControladorMenuUsuarios extends HttpServlet {
 				Articulo articuloFacPro;
 				DAOFac_Pro.abrirComercioddbb();
 				for (Articulo articulosParaFacturasProductos : carrito.buscarTodosLosArticulos()) {
-					articuloFacPro = new Articulo(claveFacturaGenerada,
-							articulosParaFacturasProductos.getId_producto(),
-							articulosParaFacturasProductos.getCantidad());
+					articuloFacPro = new Articulo(claveFacturaGenerada, articulosParaFacturasProductos.getId_producto(), articulosParaFacturasProductos.getCantidad());
 					DAOFac_Pro.insert(articuloFacPro);
 				}
 
