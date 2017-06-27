@@ -15,6 +15,10 @@
 		href="${pageContext.request.contextPath}/admin/controladorMenuAdministradores?op=gestionDeProductos">-
 		Gestion de productos -</a>
 		
+		<a id="botonGestionStock"
+		href="${pageContext.request.contextPath}/admin/controladorMenuAdministradores?op=gestionDeStock">-
+		Gestion de Stock -</a>
+		
 		<a id="botonGestionFacturas"
 		href="${pageContext.request.contextPath}/admin/controladorMenuAdministradores?op=gestionDeFacturas">-
 		Gestion de facturas -</a></h2>

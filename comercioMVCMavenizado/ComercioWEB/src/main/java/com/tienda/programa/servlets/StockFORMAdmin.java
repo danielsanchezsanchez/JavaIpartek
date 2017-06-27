@@ -15,12 +15,11 @@ public class StockFORMAdmin extends HttpServlet {
 	static final String RUTA_LISTADO_STOCK = "/WEB-INF/vistas/StockCRUD.jsp";
 	static final String RUTA_ADMINISTRADOR_STOCKCRUD = "/admin/stockCRUD";
 	static final String RUTA_ADMINISTRADOR_REGISTROSTOCK = "/WEB-INF/vistas/StockFORMAdmin.jsp";
-       
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String salir = request.getParameter("salir");
 		String op = request.getParameter("opform");
@@ -31,7 +30,7 @@ public class StockFORMAdmin extends HttpServlet {
 		}
 
 		DAOStockddbbMySQL DAOStock = new DAOStockddbbMySQL();
-		Stock stock = new Stock(Integer.parseInt(request.getParameter("id_producto")), Integer.parseInt(request.getParameter("cantidad")));
+		Stock stock = new Stock(Integer.parseInt(request.getParameter("id_producto")), Integer.parseInt(request.getParameter("stock")), true);
 
 		switch (op) {
 		case "modificar":
@@ -48,8 +47,9 @@ public class StockFORMAdmin extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + RUTA_ADMINISTRADOR_STOCKCRUD);
 			return;
 
-		case "alta":
+		case "Aceptar":
 			int id_producto = Integer.parseInt(request.getParameter("id_producto"));
+
 			DAOStock.abrirComercioddbb();
 			// Si el nombre ya existe.
 			if (DAOStock.buscarStockPorProducto(id_producto) != null) {

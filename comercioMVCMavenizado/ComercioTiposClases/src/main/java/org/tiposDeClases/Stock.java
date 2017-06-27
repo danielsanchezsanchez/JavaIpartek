@@ -1,20 +1,36 @@
 package org.tiposDeClases;
 
 public class Stock {
-	
+
 	private Producto producto;
-	
+
 	private int stock, id_producto;
-	
+
+	private boolean entienda;
+
 	private String errores;
 
-	//Constructores
+	// Constructores
+	public Stock(int id_producto, Producto producto, int stock) {
+		super();
+		this.producto = producto;
+		this.stock = stock;
+		this.id_producto = id_producto;
+	}
+
+	public Stock(int id_producto, int stock, boolean entienda) {
+		super();
+		this.stock = stock;
+		this.id_producto = id_producto;
+		this.entienda = entienda;
+	}
+
 	public Stock(int id_producto, int stock) {
 		super();
 		this.stock = stock;
 		this.id_producto = id_producto;
 	}
-	
+
 	public Stock(int id_producto, String errores) {
 		super();
 		this.id_producto = id_producto;
@@ -30,8 +46,8 @@ public class Stock {
 	public Stock() {
 		super();
 	}
-	
-	//Getters y Setters
+
+	// Getters y Setters
 	public Producto getProducto() {
 		return producto;
 	}
@@ -47,7 +63,7 @@ public class Stock {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-	
+
 	public int getId_producto() {
 		return id_producto;
 	}
@@ -64,7 +80,15 @@ public class Stock {
 		this.errores = errores;
 	}
 
-	//Hascode y equal
+	public boolean isEntienda() {
+		return entienda;
+	}
+
+	public void setEntienda(boolean entienda) {
+		this.entienda = entienda;
+	}
+
+	// Hascode y equal
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -93,10 +117,10 @@ public class Stock {
 		return true;
 	}
 
-	//ToString
+	// ToString
 	@Override
 	public String toString() {
 		return "Stock [producto=" + producto + ", stock=" + stock + "]";
 	}
-	
+
 }

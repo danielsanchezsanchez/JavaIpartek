@@ -4,28 +4,26 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <nav>
 	<h2>Formulario Stock de producto:</h2>
+	<jsp:useBean id="producto" scope="request" class="org.tiposDeClases.Producto" />
 
-	<jsp:useBean id="stock" scope="request"
-		class="org.tiposDeClases.Stock" />
-
-	<form
-		action="${pageContext.request.contextPath}/admin/stockFORMAdmin"
+	<form action="${pageContext.request.contextPath}/admin/stockFORMAdmin"
 		method="post">
 		<fieldset>
-			<label for="id_producto">Id del producto: </label> <input id="id_producto" name="id_producto"
-				value="${stock.producto.ID}" readonly="readonly" />
+			<label for="id_producto">Id del producto: </label> <input
+				id="id_producto" name="id_producto" value="${producto.ID}"
+				readonly="readonly" />
 		</fieldset>
 		<fieldset>
 			<label for="nombre_producto">Nombre del producto: </label> <input
 				id="nombre_producto" name="nombre_producto"
-				value="${stock.producto.nombre}"
+				value="${producto.nombre}"
 				<c:if test="${param.op == param.op == 'borrar'}">
 			  	readonly="readonly"
 			  </c:if> />
 		</fieldset>
 		<fieldset>
-			<label for="cantidad">Cantidad: </label> <input id="cantidad"
-				name="cantidad" value="${stock.cantidad}"
+			<label for="stock">Stock: </label> <input id="stock" name="stock"
+				value="0"
 				<c:if test="${param.op == param.op == 'borrar'}">
 			  	readonly="readonly"
 			  </c:if> />
@@ -38,7 +36,7 @@
 			<input type="submit" name="salir" value="SALIR" />
 			<p class="errores">${factura.errores}</p>
 
-			<input type="hidden" name="opform" value="${param.op}" />
+			<input type="hidden" name="opform" value="Aceptar" />
 		</fieldset>
 	</form>
 	<c:if test="${param.op == 'borrar'}">

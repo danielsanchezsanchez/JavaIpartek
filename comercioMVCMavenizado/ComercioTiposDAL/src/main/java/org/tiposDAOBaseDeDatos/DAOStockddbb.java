@@ -2,13 +2,13 @@ package org.tiposDAOBaseDeDatos;
 
 import org.tiposDeClases.Stock;
 
-public interface DAOStockddbb extends DAOComercioddbb{
-	
+public interface DAOStockddbb extends DAOComercioddbb {
+
 	public Stock[] buscarTodos();
 
 	public Stock buscarStockPorProducto(int id_producto);
 
-	public int insert(Stock stock);
+	public void insert(Stock stock);
 
 	public void update(Stock stock);
 

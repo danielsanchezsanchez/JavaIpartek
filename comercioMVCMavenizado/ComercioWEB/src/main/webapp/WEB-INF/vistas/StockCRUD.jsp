@@ -13,7 +13,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach items="${requestScope.facturas}" var="factura">
+		<c:forEach items="${requestScope.stock}" var="stock">
 			<tr>
 				<td>${stock.producto.ID}</td>
 				<td>${stock.producto.nombre}</td>

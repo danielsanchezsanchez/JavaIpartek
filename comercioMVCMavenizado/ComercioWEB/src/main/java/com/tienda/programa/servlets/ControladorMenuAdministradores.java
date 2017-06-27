@@ -49,7 +49,7 @@ public class ControladorMenuAdministradores extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + RUTA_ADMINISTRADOR_PRODUCTOCRUD);
 				return;
 			case "gestionDeStock":
-				response.sendRedirect(request.getContextPath() + RUTA_ADMINISTRADOR_FACTURACRUD);
+				response.sendRedirect(request.getContextPath() + RUTA_ADMINISTRADOR_STOCKCRUD);
 				return;
 			case "gestionDeFacturas":
 				response.sendRedirect(request.getContextPath() + RUTA_ADMINISTRADOR_FACTURACRUD);

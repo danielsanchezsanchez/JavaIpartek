@@ -11,13 +11,14 @@ import org.tiposDeClases.Producto;
 public class DAOProductoddbbMySQL extends DAOComercioddbbMySQL implements DAOProductoddbb {
 
 	private final static String BUSCAR_TODOS = "SELECT * FROM productos";
+	private final static String BUSCAR_TODOS_NO_EN_TIENDA = "SELECT * FROM productos where id NOT in (select id_producto from stock where ENTIENDA = true)";
 	private final static String BUSCAR_POR_NOMBRE = "SELECT * FROM productos WHERE nombre LIKE ?";
 	private final static String BUSCAR_POR_ID = "SELECT * FROM productos WHERE id LIKE ?";
 	private final static String INSERT = "INSERT INTO productos (nombre, precio, descripcion, url_producto_img)" + " VALUES (?, ?, ?, ?)";
 	private final static String UPDATE = "UPDATE productos " + "SET nombre = ?, precio = ?, descripcion = ?, url_producto_img = ? " + "WHERE id = ?";
 	private final static String DELETE = "DELETE FROM productos WHERE id = ?";
 
-	private PreparedStatement psBuscarTodos, psBuscarPorNombre, psBuscarPorId, psInsert, psUpdate, psDelete;
+	private PreparedStatement psBuscarTodos, psBuscarTodosNoEnTienda, psBuscarPorNombre, psBuscarPorId, psInsert, psUpdate, psDelete;
 
 	private void cerrar(PreparedStatement ps) {
 		cerrar(ps, null);
@@ -65,6 +66,38 @@ public class DAOProductoddbbMySQL extends DAOComercioddbbMySQL implements DAOPro
 			cerrar(psBuscarTodos, rs);
 		}
 		return productos.toArray(new Producto[productos.size()]);
+	}
+
+	@Override
+	public Producto[] buscarTodosLosNoEnTienda() {
+		ArrayList<Producto> productos = new ArrayList<Producto>();
+		ResultSet rs = null;
+		try {
+
+			psBuscarTodosNoEnTienda = con.prepareStatement(BUSCAR_TODOS_NO_EN_TIENDA);
+			rs = psBuscarTodosNoEnTienda.executeQuery();
+
+			Producto producto;
+
+			while (rs.next()) {
+				producto = new Producto();
+
+				producto.setID(rs.getInt("id"));
+				producto.setNombre(rs.getString("nombre"));
+				producto.setPrecio(rs.getBigDecimal("precio"));
+				producto.setDescripcion(rs.getString("descripcion"));
+				producto.setUrl_producto_img(rs.getString("url_producto_img"));
+
+				productos.add(producto);
+			}
+
+		} catch (SQLException e) {
+			throw new DAOBaseDeDatosException("Error en findAll", e);
+		} finally {
+			cerrar(psBuscarTodosNoEnTienda, rs);
+		}
+		return productos.toArray(new Producto[productos.size()]);
+
 	}
 
 	@Override
