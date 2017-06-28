@@ -11,4 +11,6 @@ public interface DAOComercioddbb {
 	public void confirmarTransaccion();
 
 	public void deshacerTransaccion();
+
+	public void reutilizarConexion(DAOComercioddbb DAOComercio);
 }

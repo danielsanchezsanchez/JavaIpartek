@@ -16,11 +16,14 @@ import org.tiposDAOBaseDeDatos.DAOFacturaddbb;
 import org.tiposDAOBaseDeDatos.DAOFacturaddbbMySQL;
 import org.tiposDAOBaseDeDatos.DAOProductoddbb;
 import org.tiposDAOBaseDeDatos.DAOProductoddbbMySQL;
+import org.tiposDAOBaseDeDatos.DAOStockddbb;
+import org.tiposDAOBaseDeDatos.DAOStockddbbMySQL;
 import org.tiposDAOBaseDeDatos.DAOUsuarioddbb;
 import org.tiposDAOBaseDeDatos.DAOUsuarioddbbMySQL;
 import org.tiposDeClases.Articulo;
 import org.tiposDeClases.Factura;
 import org.tiposDeClases.Producto;
+import org.tiposDeClases.Stock;
 import org.tiposDeClases.Usuario;
 
 public class ControladorMenuUsuarios extends HttpServlet {
@@ -40,8 +43,7 @@ public class ControladorMenuUsuarios extends HttpServlet {
 	}
 
 	@SuppressWarnings("unused")
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Abrimos sesion
 		HttpSession sesion = request.getSession();
 
@@ -89,7 +91,7 @@ public class ControladorMenuUsuarios extends HttpServlet {
 					// Busco y relleno los productos
 					productoDB.abrirComercioddbb();
 					Producto[] productosComenzar;
-					productosComenzar = productoDB.buscarTodos();
+					productosComenzar = productoDB.buscarTodosLosEnTienda();
 					productoDB.cerrarComercioddbb();
 
 					// Metemos los productos en un array de articulos para poder
@@ -116,43 +118,59 @@ public class ControladorMenuUsuarios extends HttpServlet {
 				return;
 
 			case "seguirComprando":
+				DAOStockddbb stockProducto = new DAOStockddbbMySQL();
 				String ruta = request.getParameter("ruta");
 
 				// Si estoy viendo los productos no guardo nada
 				if (ruta != null) {
 
 				} else {
-					
+
 					if (request.getParameter("id") == null) {
 
 					} else {
 						cantidad = Integer.parseInt(request.getParameter("cantidad"));
-						
+
 						// Si ha comprado algo lo guardamos AQUI
 						int id_producto = Integer.parseInt(request.getParameter("id"));
 						articulo = new Articulo(id_producto, cantidad);
 						carrito = (CarritoDAL) sesion.getAttribute("carrito");
 
-						// Compruebo si ya tenia este articulo
-						if (carrito.buscarUnArticuloPorIdProducto(id_producto) == null) {
+						// Comprobamos el stock
+						stockProducto.abrirComercioddbb();
+						Stock stock = stockProducto.buscarStockPorProducto(id_producto);
+						stockProducto.cerrarComercioddbb();
 
-							// Si no lo tiene, añado el articulo al carrito
-							// En la session ofc, excepto que la cantidad sea
-							// cero.
-							if (cantidad == 0) {
+						if (stock.getStock() < cantidad) {
 
+							// Error de no suficiente STOCK
+							request.setAttribute("errores", "¡¡¡ATENCION!!!: Error en la cantidad, menos de la especificada.");
+							carrito = (CarritoDAL) sesion.getAttribute("carrito");
+							carrito.borrar(articulo);
+							sesion.setAttribute("carrito", carrito);
+
+						} else {
+							// Compruebo si ya tenia este articulo
+							if (carrito.buscarUnArticuloPorIdProducto(id_producto) == null) {
+
+								// Si no lo tiene, añado el articulo al carrito
+								// En la session ofc, excepto que la cantidad
+								// sea
+								// cero.
+								if (cantidad == 0) {
+
+								} else {
+									carrito = (CarritoDAL) sesion.getAttribute("carrito");
+									carrito.aniadir(articulo);
+									sesion.setAttribute("carrito", carrito);
+								}
 							} else {
+								// Si ya lo tiene lo modifico
 								carrito = (CarritoDAL) sesion.getAttribute("carrito");
-								carrito.aniadir(articulo);
+								articulo.setCantidad(cantidad + carrito.buscarUnArticuloPorIdProducto(id_producto).getCantidad());
+								carrito.modificar(articulo);
 								sesion.setAttribute("carrito", carrito);
 							}
-						} else {
-							// Si ya lo tiene lo modifico
-							carrito = (CarritoDAL) sesion.getAttribute("carrito");
-							articulo.setCantidad(cantidad
-									+ carrito.buscarUnArticuloPorIdProducto(id_producto).getCantidad());
-							carrito.modificar(articulo);
-							sesion.setAttribute("carrito", carrito);
 						}
 					}
 				}
@@ -160,7 +178,7 @@ public class ControladorMenuUsuarios extends HttpServlet {
 				// Busco y relleno los productos en un array de articulos
 				productoDB.abrirComercioddbb();
 				Producto[] productosSeguir;
-				productosSeguir = productoDB.buscarTodos();
+				productosSeguir = productoDB.buscarTodosLosEnTienda();
 				productoDB.cerrarComercioddbb();
 
 				// Metemos los productos en un array de articulos para poder
@@ -173,8 +191,7 @@ public class ControladorMenuUsuarios extends HttpServlet {
 					articuloPorProducto.setProducto(productosSeguir[i]);
 					// Añadimos la cantidad de cada carrito
 					if (carrito.buscarUnArticuloPorIdProducto(articuloPorProducto.getProducto().getID()) != null) {
-						cantidadProducto = carrito.buscarUnArticuloPorIdProducto(
-								articuloPorProducto.getProducto().getID()).getCantidad();
+						cantidadProducto = carrito.buscarUnArticuloPorIdProducto(articuloPorProducto.getProducto().getID()).getCantidad();
 						articuloPorProducto.setCantidad(cantidadProducto);
 
 						// Si el producto no esta en el carrito cantidad=0
@@ -254,26 +271,45 @@ public class ControladorMenuUsuarios extends HttpServlet {
 				DENDASSTRG = "DENDA" + DENDASSTRG;
 				System.out.println(DENDASSTRG);
 
-				// Creamos la factura
-				Factura factura = new Factura(DENDASSTRG, id_usuario);
-				int claveFacturaGenerada;
+				// Abrimos la transaccion
+				DAOFactura.iniciarTransaccion();
 
-				claveFacturaGenerada = DAOFactura.insert(factura);
+				try {
+					// Creamos la factura
+					Factura factura = new Factura(DENDASSTRG, id_usuario);
+					int claveFacturaGenerada;
 
-				// Introducimos las lineas de factura-productos
-				DAOFactura_ProductoddbbMySQL DAOFac_Pro = new DAOFactura_ProductoddbbMySQL();
-				Articulo articuloFacPro;
-				DAOFac_Pro.abrirComercioddbb();
-				for (Articulo articulosParaFacturasProductos : carrito.buscarTodosLosArticulos()) {
-					articuloFacPro = new Articulo(claveFacturaGenerada,
-							articulosParaFacturasProductos.getId_producto(),
-							articulosParaFacturasProductos.getCantidad());
-					DAOFac_Pro.insert(articuloFacPro);
+					claveFacturaGenerada = DAOFactura.insert(factura);
+
+					// Introducimos las lineas de factura-productos
+					DAOFactura_ProductoddbbMySQL DAOFac_Pro = new DAOFactura_ProductoddbbMySQL();
+					Articulo articuloFacPro;
+					DAOFac_Pro.reutilizarConexion(DAOFactura);
+
+					for (Articulo articulosParaFacturasProductos : carrito.buscarTodosLosArticulos()) {
+						articuloFacPro = new Articulo(claveFacturaGenerada, articulosParaFacturasProductos.getId_producto(), articulosParaFacturasProductos.getCantidad());
+						DAOFac_Pro.insert(articuloFacPro);
+
+						// Restamos stock
+						DAOStockddbb DAOStock = new DAOStockddbbMySQL();
+						DAOStock.reutilizarConexion(DAOFactura);
+
+						int cantidadNegativa = (DAOStock.buscarStockPorProducto(articuloFacPro.getId_producto())).getStock() - articuloFacPro.getCantidad();
+
+						Stock stock = new Stock(articuloFacPro.getId_producto(), cantidadNegativa);
+						DAOStock.update(stock);
+					}
+
+					// Cerramos la transaccion (TRY)
+					DAOFactura.confirmarTransaccion();
+				} catch (Exception e) {
+					// Rollback (CATCH)
+					DAOFactura.deshacerTransaccion();
+				} finally {
+
+					// Cerramos las ddbb
+					DAOFactura.cerrarComercioddbb();
 				}
-
-				// Cerramos las ddbb
-				DAOFac_Pro.cerrarComercioddbb();
-				DAOFactura.cerrarComercioddbb();
 
 				// Redirigo a comenzar compra tras vaciar el carrito
 				carrito = CarritoDALFactory.getCarritoDAL();

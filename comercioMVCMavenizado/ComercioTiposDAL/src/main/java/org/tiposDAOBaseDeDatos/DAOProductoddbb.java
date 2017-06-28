@@ -6,6 +6,8 @@ public interface DAOProductoddbb extends DAOComercioddbb {
 
 	public Producto[] buscarTodos();
 
+	public Producto[] buscarTodosLosEnTienda();
+
 	public Producto[] buscarTodosLosNoEnTienda();
 
 	public Producto buscarPorId(int id);

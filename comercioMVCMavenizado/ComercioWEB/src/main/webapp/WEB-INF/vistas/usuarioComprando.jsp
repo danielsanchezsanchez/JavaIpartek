@@ -34,6 +34,8 @@
 		</c:forEach>
 	</tbody>
 </table>
+
+<div>${errores}</div>
 <div>
 	<a href="controladorMenuUsuarios?op=verCarrito">- Ver el carrito -</a>
 </div>

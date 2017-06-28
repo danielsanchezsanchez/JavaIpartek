@@ -8,9 +8,9 @@
 <table>
 	<tr>
 		<td>
-			<input type="text" readonly="readonly" value=${fn:toUpperCase("Nombre")}>
-			<input type="text" readonly="readonly" value=${fn:toUpperCase("Precio")}>
-			<input type="text" readonly="readonly" value=${fn:toUpperCase("Cantidad")}>
+			<input type="text" readonly="readonly" value="ARTICULO">
+			<input type="text" readonly="readonly" value="PRECIO UNIDAD">
+			<input type="text" readonly="readonly" value="CANTIDAD">
 		</td>
 	</tr>
 	<c:forEach items="${requestScope.articulos}" var="articulo">

@@ -88,4 +88,10 @@ public class DAOComercioddbbMySQL implements DAOComercioddbb {
 
 	}
 
+	@Override
+	public void reutilizarConexion(DAOComercioddbb DAOComercio) {
+		con = ((DAOComercioddbbMySQL) DAOComercio).con;
+
+	}
+
 }

@@ -14,9 +14,8 @@ public class DAOStockddbbMySQL extends DAOComercioddbbMySQL implements DAOStockd
 	private final static String INSERT = "INSERT INTO stock (id_producto, stock, entienda)" + " VALUES (?, ?, ?)";
 	private final static String UPDATE = "UPDATE stock " + "SET id_producto = ?, stock = ? " + "WHERE id_producto = ?";
 	private final static String DELETE = "DELETE FROM stock WHERE id_producto = ?";
-	
-	private PreparedStatement psBuscarTodos, psBuscarStockPorProducto, psInsert, psUpdate,
-	psDelete;
+
+	private PreparedStatement psBuscarTodos, psBuscarStockPorProducto, psInsert, psUpdate, psDelete;
 
 	private void cerrar(PreparedStatement ps) {
 		cerrar(ps, null);
@@ -125,6 +124,7 @@ public class DAOStockddbbMySQL extends DAOComercioddbbMySQL implements DAOStockd
 
 	@Override
 	public void update(Stock stock) {
+
 		try {
 
 			psUpdate = con.prepareStatement(UPDATE);
@@ -140,9 +140,7 @@ public class DAOStockddbbMySQL extends DAOComercioddbbMySQL implements DAOStockd
 				if (res == 0) {
 
 				} else {
-					throw new DAOBaseDeDatosException(
-							"Estas intentando modificar mas de un producto "
-									+ res);
+					throw new DAOBaseDeDatosException("Estas intentando modificar mas de un producto " + res);
 				}
 
 		} catch (SQLException e) {
@@ -162,8 +160,7 @@ public class DAOStockddbbMySQL extends DAOComercioddbbMySQL implements DAOStockd
 			int res = psDelete.executeUpdate();
 
 			if (res != 1)
-				throw new DAOBaseDeDatosException(
-						"El delete ha devuelto un valor " + res);
+				throw new DAOBaseDeDatosException("El delete ha devuelto un valor " + res);
 
 		} catch (SQLException e) {
 			throw new DAOBaseDeDatosException("Error en delete", e);
@@ -182,8 +179,7 @@ public class DAOStockddbbMySQL extends DAOComercioddbbMySQL implements DAOStockd
 			int res = psDelete.executeUpdate();
 
 			if (res != 1)
-				throw new DAOBaseDeDatosException(
-						"El delete ha devuelto un valor " + res);
+				throw new DAOBaseDeDatosException("El delete ha devuelto un valor " + res);
 
 		} catch (SQLException e) {
 			throw new DAOBaseDeDatosException("Error en delete", e);

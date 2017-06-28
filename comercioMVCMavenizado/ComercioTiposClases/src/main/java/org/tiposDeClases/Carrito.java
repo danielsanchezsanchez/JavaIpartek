@@ -1,11 +1,11 @@
 package org.tiposDeClases;
 
 public class Carrito {
-	
+
 	private int id, id_factura, id_producto, cantidad;
-	
-	//Constructores
-	
+
+	// Constructores
+
 	public Carrito(int id, int id_factura, int id_producto, int cantidad) {
 		super();
 		this.id = id;
@@ -13,12 +13,12 @@ public class Carrito {
 		this.id_producto = id_producto;
 		this.cantidad = cantidad;
 	}
-	
-	public Carrito(){
-		
+
+	public Carrito() {
+
 	}
 
-	//Getters and Setters
+	// Getters and Setters
 	public int getId() {
 		return id;
 	}
@@ -51,7 +51,7 @@ public class Carrito {
 		this.cantidad = cantidad;
 	}
 
-	//EQUALS y HASCODE
+	// EQUALS y HASCODE
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -83,11 +83,9 @@ public class Carrito {
 		return true;
 	}
 
-	//TO String
+	// TO String
 	@Override
 	public String toString() {
-		return "Carrito [id=" + id + ", id_factura=" + id_factura
-				+ ", id_producto=" + id_producto + ", cantidad=" + cantidad
-				+ "]";
+		return "Carrito [id=" + id + ", id_factura=" + id_factura + ", id_producto=" + id_producto + ", cantidad=" + cantidad + "]";
 	}
 }
