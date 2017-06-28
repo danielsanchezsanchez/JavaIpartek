@@ -17,7 +17,8 @@ public class StockCRUD extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	static final String RUTA_LISTADO_STOCK = "/WEB-INF/vistas/StockCRUD.jsp";
 	static final String RUTA_FORMULARIO_ALTA_EN_TIENDA = "/WEB-INF/vistas/adminProductoStock.jsp";
-	static final String RUTA_FORMULARIO_STOCK = "/WEB-INF/vistas/StockFORMAdmin.jsp";
+	static final String RUTA_FORMULARIO_STOCK_ALTA = "/WEB-INF/vistas/StockFORMAdminAlta.jsp";
+	static final String RUTA_FORMULARIO_STOCK_MODIFICARBORRAR = "/WEB-INF/vistas/StockFORMAdminModificarBorrar.jsp";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
@@ -28,7 +29,7 @@ public class StockCRUD extends HttpServlet {
 		DAOProductoddbbMySQL DAOProducto = new DAOProductoddbbMySQL();
 
 		String op = request.getParameter("op");
-
+		
 		// Primera vez que pasa por aqui.
 		if (op == null) {
 
@@ -45,7 +46,7 @@ public class StockCRUD extends HttpServlet {
 		}
 		// Cuando escoje una de las opciones
 		if (op != null) {
-
+			
 			int id_producto;
 			Stock stock;
 
@@ -57,7 +58,7 @@ public class StockCRUD extends HttpServlet {
 				stock = DAOStock.buscarStockPorProducto(id_producto);
 				DAOStock.cerrarComercioddbb();
 				request.setAttribute("stock", stock);
-				request.getRequestDispatcher(RUTA_FORMULARIO_STOCK).forward(request, response);
+				request.getRequestDispatcher(RUTA_FORMULARIO_STOCK_MODIFICARBORRAR).forward(request, response);
 				return;
 			case "borrar":
 				id_producto = Integer.parseInt(request.getParameter("id_producto"));
@@ -66,7 +67,7 @@ public class StockCRUD extends HttpServlet {
 				stock = DAOStock.buscarStockPorProducto(id_producto);
 				DAOStock.cerrarComercioddbb();
 				request.setAttribute("stock", stock);
-				request.getRequestDispatcher(RUTA_FORMULARIO_STOCK).forward(request, response);
+				request.getRequestDispatcher(RUTA_FORMULARIO_STOCK_MODIFICARBORRAR).forward(request, response);
 				return;
 			case "alta":
 				DAOProducto.abrirComercioddbb();
@@ -82,7 +83,7 @@ public class StockCRUD extends HttpServlet {
 				productoStock = DAOProducto.buscarPorId(id_stock);
 				DAOProducto.cerrarComercioddbb();
 				request.setAttribute("producto", productoStock);
-				request.getRequestDispatcher(RUTA_FORMULARIO_STOCK).forward(request, response);
+				request.getRequestDispatcher(RUTA_FORMULARIO_STOCK_ALTA).forward(request, response);
 				return;
 			}
 		}
