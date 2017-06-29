@@ -221,12 +221,29 @@ public class ControladorMenuUsuarios extends HttpServlet {
 
 				articulo = new Articulo(id_producto, cantidad);
 
-				// Modifico el articulo en el carrito
-				// En la session ofc
-				carrito = (CarritoDAL) sesion.getAttribute("carrito");
-				carrito.modificar(articulo);
-				sesion.setAttribute("carrito", carrito);
+				// Comprobamos el stock
+				DAOStockddbb stockProductoModificar = new DAOStockddbbMySQL();
 
+				stockProductoModificar.abrirComercioddbb();
+				Stock stockModificar = stockProductoModificar.buscarStockPorProducto(id_producto);
+				stockProductoModificar.cerrarComercioddbb();
+
+				if (stockModificar.getStock() < cantidad) {
+
+					// Error de no suficiente STOCK
+					request.setAttribute("errores", "¡¡¡ATENCION!!!: Error en la cantidad, menos de la especificada.");
+					carrito = (CarritoDAL) sesion.getAttribute("carrito");
+					// carrito.borrar(articulo);
+					sesion.setAttribute("carrito", carrito);
+
+				} else {
+
+					// Modifico el articulo en el carrito
+					// En la session ofc
+					carrito = (CarritoDAL) sesion.getAttribute("carrito");
+					carrito.modificar(articulo);
+					sesion.setAttribute("carrito", carrito);
+				}
 				// Mando el carrito
 				carrito = (CarritoDAL) sesion.getAttribute("carrito");
 				request.setAttribute("articulos", carrito.buscarTodosLosArticulos());
@@ -327,6 +344,7 @@ public class ControladorMenuUsuarios extends HttpServlet {
 				// jsp
 				Factura[] facturaHistoricos;
 				facturaHistoricos = DAOFacturaHistorica.buscarTodasPorUsuario(id_usuario);
+
 				request.setAttribute("facturaHistoricos", facturaHistoricos);
 
 				// Cerramos la ddbb

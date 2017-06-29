@@ -28,6 +28,7 @@
 		</tr>
 	</c:forEach>
 </table>
+<div>${errores}</div>
 <div>
 	<a onclick="return confirm('¿Comprar? - ¡¡¡¡ESTAS USANDO DINERO REAL!!!! - ');"
 		id="botonAceptarCompra"

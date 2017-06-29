@@ -4,7 +4,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <nav>
 	<h2>Formulario Stock de producto:</h2>
-	<jsp:useBean id="producto" scope="request" class="org.tiposDeClases.Producto" />
+	<jsp:useBean id="producto" scope="request"
+		class="org.tiposDeClases.Producto" />
 
 	<form action="${pageContext.request.contextPath}/admin/stockFORMAdmin"
 		method="post">
@@ -29,16 +30,19 @@
 			  </c:if> />
 		</fieldset>
 		<fieldset>
-			<input type="submit" value="${fn:toUpperCase(param.op)}"
-				<c:if test="${param.op==null or param.op=='' }">
-			Style="display:none;"
-			</c:if> />
+			<c:if test="${param.op!=null and param.op!='' }">
+				<input type="submit" value="${fn:toUpperCase(param.op)}" />
+			</c:if>
+			<c:if test="${param.op==null or param.op=='' }">
+				<input type="submit" value="${op}" />
+			</c:if>
 			<input type="submit" name="salir" value="SALIR" />
 			<p class="errores">${factura.errores}</p>
-
-			<input type="hidden" name="opform" value="Aceptar" />
+			<input type="hidden" name="op" value="${op}" /> <input type="hidden"
+				name="opform" value="Aceptar" />
 		</fieldset>
 	</form>
+	<div>${errores}</div>
 	<c:if test="${param.op == 'borrar'}">
 		<script>
 			document.forms[0].onsubmit = confirmarBorrado;

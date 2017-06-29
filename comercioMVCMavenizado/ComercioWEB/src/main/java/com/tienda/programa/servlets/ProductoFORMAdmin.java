@@ -24,6 +24,7 @@ public class ProductoFORMAdmin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String salir = request.getParameter("salir");
 		String op = request.getParameter("op");
+
 		if (salir != null) {
 			request.getRequestDispatcher(RUTA_ADMINISTRADOR_PRODUCTOCRUD).forward(request, response);
 			return;

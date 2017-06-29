@@ -9,21 +9,19 @@ import java.util.ArrayList;
 import org.tiposDeClases.Factura;
 import org.tiposDeClases.Usuario;
 
-public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements
-		DAOFacturaddbb {
+public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements DAOFacturaddbb {
 
+	// private static Logger log = Logger.getLogger(DAOFacturaddbbMySQL.class);
 	private final static String BUSCAR_ULTIMO_NUMERO_FACTURA = "SELECT numero_factura FROM facturas ORDER BY id DESC LIMIT 1";
 	private final static String BUSCAR_TODAS = "SELECT * FROM facturas";
-	private final static String BUSCAR_TODAS_CON_USUARIOS = "SELECT facturas.id, facturas.numero_factura, usuarios.nickusuario, facturas.fecha_compra FROM facturas, usuarios WHERE usuarios.id=facturas.id_usuario";
+	private final static String BUSCAR_TODAS_CON_USUARIOS = "SELECT facturas.id, facturas.numero_factura, usuarios.nickusuario, facturas.fecha_compra FROM facturas, usuarios WHERE usuarios.id=facturas.id_usuario ORDER BY facturas.numero_factura";
 	private final static String BUSCAR_POR_NUMERO = "SELECT * FROM facturas WHERE numero_factura LIKE ?";
 	private final static String BUSCAR_TODAS_POR_USUARIO = "SELECT * FROM facturas WHERE id_usuario LIKE ?";
-	private final static String INSERT = "INSERT INTO facturas (numero_factura, id_usuario)"+ " VALUES (?, ?)";
-	private final static String UPDATE = "UPDATE facturas "	+ "SET numero_factura = ?, id_usuario = ? " + "WHERE id = ?";
+	private final static String INSERT = "INSERT INTO facturas (numero_factura, id_usuario)" + " VALUES (?, ?)";
+	private final static String UPDATE = "UPDATE facturas " + "SET numero_factura = ?, id_usuario = ? " + "WHERE id = ?";
 	private final static String DELETE = "DELETE FROM facturas WHERE id = ?";
 
-	private PreparedStatement psBuscarTodas, psBuscarUltima,
-			psBuscarTodasConUsuarios, psBuscarTodasPorUsuario, psBuscarPorNumero, psInsert, psUpdate,
-			psDelete;
+	private PreparedStatement psBuscarTodas, psBuscarUltima, psBuscarTodasConUsuarios, psBuscarTodasPorUsuario, psBuscarPorNumero, psInsert, psUpdate, psDelete;
 
 	private void cerrar(PreparedStatement ps) {
 		cerrar(ps, null);
@@ -58,8 +56,9 @@ public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements
 				factura.setId(rs.getInt("id"));
 				factura.setNumero_factura(rs.getString("numero_factura"));
 				factura.setId_usuario(rs.getInt("id_usuario"));
-				factura.setFecha(rs.getDate("fecha_compra"));
-
+				factura.setFecha(rs.getTimestamp("fecha_compra"));
+				// log.info("Formato de fecha: " +
+				// rs.getTimestamp("fecha_compra"));
 				facturas.add(factura);
 			}
 
@@ -71,7 +70,7 @@ public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements
 
 		return facturas.toArray(new Factura[facturas.size()]);
 	}
-	
+
 	@Override
 	public String buscarUltima() {
 		String numero_factura = null;
@@ -82,7 +81,7 @@ public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements
 
 			if (rs.next()) {
 
-				numero_factura=rs.getString("facturas.numero_factura");
+				numero_factura = rs.getString("facturas.numero_factura");
 			}
 
 		} catch (SQLException e) {
@@ -111,8 +110,7 @@ public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements
 				factura.setId(rs.getInt("id"));
 				factura.setNumero_factura(rs.getString("numero_factura"));
 				factura.setId_usuario(rs.getInt("id_usuario"));
-				factura.setFecha(rs.getDate("fecha_compra"));
-
+				factura.setFecha(rs.getTimestamp("fecha_compra"));
 				facturas.add(factura);
 			}
 
@@ -130,8 +128,7 @@ public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements
 		ResultSet rs = null;
 		try {
 
-			psBuscarTodasConUsuarios = con
-					.prepareStatement(BUSCAR_TODAS_CON_USUARIOS);
+			psBuscarTodasConUsuarios = con.prepareStatement(BUSCAR_TODAS_CON_USUARIOS);
 			rs = psBuscarTodasConUsuarios.executeQuery();
 
 			Factura factura;
@@ -142,11 +139,10 @@ public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements
 				usuario = new Usuario();
 
 				factura.setId(rs.getInt("facturas.id"));
-				factura.setNumero_factura(rs
-						.getString("facturas.numero_factura"));
+				factura.setNumero_factura(rs.getString("facturas.numero_factura"));
 				usuario.setNickusuario(rs.getString("usuarios.nickusuario"));
 				factura.setUsuario(usuario);
-				factura.setFecha(rs.getDate("facturas.fecha_compra"));
+				factura.setFecha(rs.getTimestamp("facturas.fecha_compra"));
 
 				facturas.add(factura);
 			}
@@ -178,10 +174,9 @@ public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements
 				factura = new Factura();
 
 				factura.setId(rs.getInt("facturas.id"));
-				factura.setNumero_factura(rs
-						.getString("facturas.numero_factura"));
+				factura.setNumero_factura(rs.getString("facturas.numero_factura"));
 				factura.setId_usuario(rs.getInt("id_usuario"));
-				factura.setFecha(rs.getDate("facturas.fecha_compra"));
+				factura.setFecha(rs.getTimestamp("facturas.fecha_compra"));
 			}
 
 		} catch (SQLException e) {
@@ -197,8 +192,7 @@ public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements
 	public int insert(Factura factura) {
 		try {
 
-			psInsert = con.prepareStatement(INSERT,
-					Statement.RETURN_GENERATED_KEYS);
+			psInsert = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 
 			psInsert.setString(1, factura.getNumero_factura());
 			psInsert.setInt(2, factura.getId_usuario());
@@ -206,16 +200,14 @@ public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements
 			int res = psInsert.executeUpdate();
 
 			if (res != 1) {
-				throw new DAOBaseDeDatosException(
-						"La inserción ha devuelto un valor " + res);
+				throw new DAOBaseDeDatosException("La inserción ha devuelto un valor " + res);
 			}
 			ResultSet generatedKeys = psInsert.getGeneratedKeys();
 
 			if (generatedKeys.next()) {
 				return generatedKeys.getInt(1);
 			} else {
-				throw new DAOBaseDeDatosException(
-						"No se ha recibido la clave generada");
+				throw new DAOBaseDeDatosException("No se ha recibido la clave generada");
 			}
 
 		} catch (SQLException e) {
@@ -243,9 +235,7 @@ public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements
 				if (res == 0) {
 
 				} else {
-					throw new DAOBaseDeDatosException(
-							"Estas intentando modificar mas de un usuario "
-									+ res);
+					throw new DAOBaseDeDatosException("Estas intentando modificar mas de un usuario " + res);
 				}
 
 		} catch (SQLException e) {
@@ -271,8 +261,7 @@ public class DAOFacturaddbbMySQL extends DAOComercioddbbMySQL implements
 			int res = psDelete.executeUpdate();
 
 			if (res != 1)
-				throw new DAOBaseDeDatosException(
-						"El delete ha devuelto un valor " + res);
+				throw new DAOBaseDeDatosException("El delete ha devuelto un valor " + res);
 
 		} catch (SQLException e) {
 			throw new DAOBaseDeDatosException("Error en delete", e);

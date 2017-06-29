@@ -91,6 +91,14 @@ public class Factura {
 		this.usuario = usuario;
 	}
 
+	public String getDia() {
+		return fecha.toString().split(" ")[0];
+	}
+
+	public String getHora() {
+		return fecha.toString().split(" ")[1];
+	}
+
 	// Hascode Equals
 	@Override
 	public int hashCode() {

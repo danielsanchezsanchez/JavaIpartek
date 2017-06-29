@@ -29,10 +29,14 @@
 			  </c:if> />
 		</fieldset>
 		<fieldset>
-			<input type="submit" value="${fn:toUpperCase(param.op)}"
-				<c:if test="${param.op==null or param.op=='' }">
-			Style="display:none;"
-			</c:if> />
+
+			<c:if test="${param.op!=null and param.op!='' }">
+				<input type="submit" value="${fn:toUpperCase(param.op)}" />
+			</c:if>
+			<c:if test="${param.op==null or param.op=='' }">
+				<input type="submit" value="${op}" />
+			</c:if>
+
 			<input type="submit" name="salir" value="SALIR" />
 			<p class="errores">${factura.errores}</p>
 

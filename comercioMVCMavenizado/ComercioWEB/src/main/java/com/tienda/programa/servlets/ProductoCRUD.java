@@ -22,9 +22,20 @@ public class ProductoCRUD extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DAOProductoddbbMySQL DAOProducto = new DAOProductoddbbMySQL();
 		String op = request.getParameter("op");
+		String salir = request.getParameter("salir");
 
 		// Primera vez que pasa por aqui.
 		if (op == null) {
+			DAOProducto.abrirComercioddbb();
+			Producto[] productos = DAOProducto.buscarTodos();
+			DAOProducto.cerrarComercioddbb();
+			request.setAttribute("productos", productos);
+			request.getRequestDispatcher(RUTA_LISTADO_PRODUCTOS).forward(request, response);
+			return;
+		}
+
+		// Si esta saliendo de productoFormAdmin
+		if (salir != null) {
 			DAOProducto.abrirComercioddbb();
 			Producto[] productos = DAOProducto.buscarTodos();
 			DAOProducto.cerrarComercioddbb();

@@ -22,8 +22,11 @@
 						type="text" name="numero_factura"
 						value="${factura.numero_factura}" readonly="readonly" /> <input
 						type="hidden" name="id_usuario" value="${factura.id_usuario}" />
-					<input type="date" name="fecha" value="${factura.fecha}"
-						readonly="readonly" /> <input type="submit" name="op"
+					<input type="date" name="fecha" value="${factura.dia}"
+						readonly="readonly" />
+						<input type="time" name="fecha" value="${factura.hora}"
+						readonly="readonly" />
+						 <input type="submit" name="op"
 						value="Ver factura" />
 				</form>
 			</td>
