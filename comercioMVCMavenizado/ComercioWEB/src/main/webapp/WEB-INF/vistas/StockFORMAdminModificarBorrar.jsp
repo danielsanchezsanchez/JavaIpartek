@@ -6,7 +6,8 @@
 	<h2>Formulario Stock de producto:</h2>
 	<jsp:useBean id="stock" scope="request" class="org.tiposDeClases.Stock" />
 
-	<form action="${pageContext.request.contextPath}/admin/stockFORMAdmin"
+	<form
+		action="${pageContext.request.contextPath}/admin/controladorStocksAdmin"
 		method="post">
 		<fieldset>
 			<label for="id_producto">Id del producto: </label> <input
@@ -34,13 +35,16 @@
 				<input type="submit" value="${fn:toUpperCase(param.op)}" />
 			</c:if>
 			<c:if test="${param.op==null or param.op=='' }">
-				<input type="submit" value="${op}" />
+				<input type="submit" value="${fn:toUpperCase(op)}" />
 			</c:if>
-
 			<input type="submit" name="salir" value="SALIR" />
 			<p class="errores">${factura.errores}</p>
-
-			<input type="hidden" name="opform" value='${param.op}' />
+			<c:if test="${param.op!=null and param.op!='' }">
+				<input type="hidden" name="opcion" value='${param.op}' />
+			</c:if>
+			<c:if test="${param.op==null or param.op=='' }">
+				<input type="hidden" name="opcion" value="modificar" />
+			</c:if>
 		</fieldset>
 	</form>
 	<c:if test="${param.op == 'borrar'}">

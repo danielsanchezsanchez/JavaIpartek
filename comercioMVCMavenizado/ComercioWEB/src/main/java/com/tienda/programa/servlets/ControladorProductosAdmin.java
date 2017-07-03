@@ -1,6 +1,7 @@
 package com.tienda.programa.servlets;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,10 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.tiposDAOBaseDeDatos.DAOProductoddbbMySQL;
 import org.tiposDeClases.Producto;
 
-public class ProductoCRUD extends HttpServlet {
+public class ControladorProductosAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 	static final String RUTA_LISTADO_PRODUCTOS = "/WEB-INF/vistas/ProductoCRUD.jsp";
 	static final String RUTA_FORMULARIO_PRODUCTOS = "/WEB-INF/vistas/ProductoFORMAdmin.jsp";
+	static final String RUTA_CONTROLADOR_PRODUCTOS = "/admin/controladorProductosAdmin";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
@@ -22,10 +25,11 @@ public class ProductoCRUD extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DAOProductoddbbMySQL DAOProducto = new DAOProductoddbbMySQL();
 		String op = request.getParameter("op");
+		String opcion = request.getParameter("opcion");
 		String salir = request.getParameter("salir");
 
 		// Primera vez que pasa por aqui.
-		if (op == null) {
+		if (op == null && opcion == null) {
 			DAOProducto.abrirComercioddbb();
 			Producto[] productos = DAOProducto.buscarTodos();
 			DAOProducto.cerrarComercioddbb();
@@ -72,6 +76,50 @@ public class ProductoCRUD extends HttpServlet {
 				request.getRequestDispatcher(RUTA_FORMULARIO_PRODUCTOS).forward(request, response);
 				return;
 
+			}
+		}
+		if (opcion != null) {
+
+			Producto producto = new Producto(Integer.parseInt(request.getParameter("id")), request.getParameter("nombre"), new BigDecimal(request.getParameter("precio")), request.getParameter("descripcion"), request.getParameter("url_producto_img"));
+
+			switch (opcion) {
+			case "modificar":
+				DAOProducto.abrirComercioddbb();
+				DAOProducto.update(producto);
+				DAOProducto.cerrarComercioddbb();
+				response.sendRedirect(request.getContextPath() + RUTA_CONTROLADOR_PRODUCTOS);
+				return;
+
+			case "borrar":
+				DAOProducto.abrirComercioddbb();
+				DAOProducto.delete(producto);
+				DAOProducto.cerrarComercioddbb();
+				response.sendRedirect(request.getContextPath() + RUTA_CONTROLADOR_PRODUCTOS);
+				return;
+
+			case "alta":
+				String nombre = request.getParameter("nombre");
+				DAOProducto.abrirComercioddbb();
+				// Si el nombre ya existe.
+				if (DAOProducto.buscarPorNombre(nombre) != null) {
+					producto.setErrores("Nombre no disponible.");
+					request.setAttribute("producto", producto);
+					request.getRequestDispatcher(RUTA_FORMULARIO_PRODUCTOS).forward(request, response);
+					return;
+				}
+
+				// Longitudes minimas
+				if (nombre.length() < 4) {
+					producto.setErrores("El nombre debe tener al menos 5 caracteres.");
+					request.setAttribute("producto", producto);
+					request.getRequestDispatcher(RUTA_FORMULARIO_PRODUCTOS).forward(request, response);
+					return;
+				}
+
+				DAOProducto.insert(producto);
+				DAOProducto.cerrarComercioddbb();
+				response.sendRedirect(request.getContextPath() + RUTA_CONTROLADOR_PRODUCTOS);
+				return;
 			}
 		}
 	}

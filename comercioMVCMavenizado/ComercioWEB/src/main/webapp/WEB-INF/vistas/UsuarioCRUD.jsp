@@ -29,16 +29,16 @@
 				<c:if test="${usuario.rol == '2'}">
 					<td>Cliente</td>
 				</c:if>
-				<td><a href="usuarioCRUD?op=modificar&nickusuario=${usuario.nickusuario}">-
+				<td><a href="controladorUsuariosAdmin?op=modificar&nickusuario=${usuario.nickusuario}">-
 						Modificar -</a></td>
-				<td><a href="usuarioCRUD?op=borrar&nickusuario=${usuario.nickusuario}">-
+				<td><a href="controladorUsuariosAdmin?op=borrar&nickusuario=${usuario.nickusuario}">-
 						Borrar -</a></td>
 			</tr>
 		</c:forEach>
 	</tbody>
 </table>
 <div class="botoneraAlta">
-	<a id="botonAltaUsuario" href="usuarioCRUD?op=alta">- Dar de alta
+	<a id="botonAltaUsuario" href="controladorUsuariosAdmin?op=alta">- Dar de alta
 		nuevo usuario -</a>
 </div>
 <div class="botonera">

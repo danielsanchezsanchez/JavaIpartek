@@ -34,30 +34,16 @@
   <servlet>
     <description>
   	</description>
-    <display-name>UsuarioCRUD</display-name>
-    <servlet-name>UsuarioCRUD</servlet-name>
-    <servlet-class>com.tienda.programa.servlets.UsuarioCRUD</servlet-class>
+    <display-name>ControladorUsuariosAdmin</display-name>
+    <servlet-name>ControladorUsuariosAdmin</servlet-name>
+    <servlet-class>com.tienda.programa.servlets.ControladorUsuariosAdmin</servlet-class>
   </servlet>
   <servlet>
     <description>
   	</description>
-    <display-name>UsuarioFORMAdmin</display-name>
-    <servlet-name>UsuarioFORMAdmin</servlet-name>
-    <servlet-class>com.tienda.programa.servlets.UsuarioFORMAdmin</servlet-class>
-  </servlet>
-  <servlet>
-    <description>
-  	</description>
-    <display-name>ProductoCRUD</display-name>
-    <servlet-name>ProductoCRUD</servlet-name>
-    <servlet-class>com.tienda.programa.servlets.ProductoCRUD</servlet-class>
-  </servlet>
-  <servlet>
-    <description>
-  	</description>
-    <display-name>ProductoFORMAdmin</display-name>
-    <servlet-name>ProductoFORMAdmin</servlet-name>
-    <servlet-class>com.tienda.programa.servlets.ProductoFORMAdmin</servlet-class>
+    <display-name>ControladorProductosAdmin</display-name>
+    <servlet-name>ControladorProductosAdmin</servlet-name>
+    <servlet-class>com.tienda.programa.servlets.ControladorProductosAdmin</servlet-class>
   </servlet>
   <servlet>
     <description>
@@ -76,16 +62,9 @@
   <servlet>
     <description>
   	</description>
-    <display-name>StockCRUD</display-name>
-    <servlet-name>StockCRUD</servlet-name>
-    <servlet-class>com.tienda.programa.servlets.StockCRUD</servlet-class>
-  </servlet>
-  <servlet>
-    <description>
-  	</description>
-    <display-name>StockFORMAdmin</display-name>
-    <servlet-name>StockFORMAdmin</servlet-name>
-    <servlet-class>com.tienda.programa.servlets.StockFORMAdmin</servlet-class>
+    <display-name>ControladorStocksAdmin</display-name>
+    <servlet-name>ControladorStocksAdmin</servlet-name>
+    <servlet-class>com.tienda.programa.servlets.ControladorStocksAdmin</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ControladorIndex</servlet-name>
@@ -100,20 +79,12 @@
     <url-pattern>/admin/controladorMenuAdministradores</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>UsuarioCRUD</servlet-name>
-    <url-pattern>/admin/usuarioCRUD</url-pattern>
+    <servlet-name>ControladorUsuariosAdmin</servlet-name>
+    <url-pattern>/admin/controladorUsuariosAdmin</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>UsuarioFORMAdmin</servlet-name>
-    <url-pattern>/admin/usuarioFORMAdmin</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>ProductoCRUD</servlet-name>
-    <url-pattern>/admin/productoCRUD</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>ProductoFORMAdmin</servlet-name>
-    <url-pattern>/admin/productoFORMAdmin</url-pattern>
+    <servlet-name>ControladorProductosAdmin</servlet-name>
+    <url-pattern>/admin/controladorProductosAdmin</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>FacturaCRUD</servlet-name>
@@ -124,11 +95,7 @@
     <url-pattern>/admin/facturaFORMAdmin</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>StockCRUD</servlet-name>
-    <url-pattern>/admin/stockCRUD</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>StockFORMAdmin</servlet-name>
-    <url-pattern>/admin/stockFORMAdmin</url-pattern>
+    <servlet-name>ControladorStocksAdmin</servlet-name>
+    <url-pattern>/admin/controladorStocksAdmin</url-pattern>
   </servlet-mapping>
 </web-app>

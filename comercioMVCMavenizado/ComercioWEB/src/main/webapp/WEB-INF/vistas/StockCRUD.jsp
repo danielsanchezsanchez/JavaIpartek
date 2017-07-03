@@ -18,16 +18,16 @@
 				<td>${stock.producto.ID}</td>
 				<td>${stock.producto.nombre}</td>
 				<td>${stock.stock}</td>
-				<td><a href="stockCRUD?op=modificar&id_producto=${stock.producto.ID}">-
+				<td><a href="controladorStocksAdmin?op=modificar&id_producto=${stock.producto.ID}">-
 						Modificar -</a></td>
-				<td><a href="stockCRUD?op=borrar&id_producto=${stock.producto.ID}">-
+				<td><a href="controladorStocksAdmin?op=borrar&id_producto=${stock.producto.ID}">-
 						Borrar -</a></td>
 			</tr>
 		</c:forEach>
 	</tbody>
 </table>
 <div class="botoneraAlta">
-	<a id="botonAltaStock" href="stockCRUD?op=alta">- Dar de alta
+	<a id="botonAltaStock" href="controladorStocksAdmin?op=alta">- Dar de alta
 		stock de producto -</a>
 </div>
 <div class="botonera">

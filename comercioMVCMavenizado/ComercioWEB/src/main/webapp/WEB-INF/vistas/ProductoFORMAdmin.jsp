@@ -9,7 +9,7 @@
 		class="org.tiposDeClases.Producto" />
 
 	<form
-		action="${pageContext.request.contextPath}/admin/productoFORMAdmin"
+		action="${pageContext.request.contextPath}/admin/controladorProductosAdmin"
 		method="post">
 		<input type="hidden" name="id" value="${producto.ID}"/>
 		<fieldset>
@@ -48,7 +48,7 @@
 			<input type="submit" name="salir" value="SALIR" />
 			<p class="errores">${producto.errores}</p>
 
-			<input type="hidden" name="op" value="${param.op}" />
+			<input type="hidden" name="opcion" value="${param.op}" />
 		</fieldset>
 	</form>
 	<c:if test="${param.op == 'borrar'}">

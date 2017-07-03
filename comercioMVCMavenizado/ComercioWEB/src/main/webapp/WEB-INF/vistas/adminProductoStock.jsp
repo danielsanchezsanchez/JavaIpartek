@@ -18,7 +18,7 @@
 				<th>${producto.ID}</th>
 				<td>${producto.nombre}</td>
 				<td>${producto.url_producto_img}</td>
-				<td><a href="stockCRUD?op=altaTienda&id=${producto.ID}">-
+				<td><a href="controladorStocksAdmin?op=altaTienda&id=${producto.ID}">-
 						Alta en tienda -</a></td>
 			</tr>
 		</c:forEach>

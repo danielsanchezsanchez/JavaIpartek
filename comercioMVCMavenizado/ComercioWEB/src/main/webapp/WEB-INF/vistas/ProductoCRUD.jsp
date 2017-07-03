@@ -22,16 +22,16 @@
 				<td>${producto.precio}</td>
 				<td>${producto.descripcion}</td>
 				<td>${producto.url_producto_img}</td>
-				<td><a href="productoCRUD?op=modificar&nombre=${producto.nombre}">-
+				<td><a href="controladorProductosAdmin?op=modificar&nombre=${producto.nombre}">-
 						Modificar -</a></td>
-				<td><a href="productoCRUD?op=borrar&nombre=${producto.nombre}">-
+				<td><a href="controladorProductosAdmin?op=borrar&nombre=${producto.nombre}">-
 						Borrar -</a></td>
 			</tr>
 		</c:forEach>
 	</tbody>
 </table>
 <div class="botoneraAlta">
-	<a id="botonAltaProducto" href="productoCRUD?op=alta">- Dar de alta
+	<a id="botonAltaProducto" href="controladorProductosAdmin?op=alta">- Dar de alta
 		nuevo producto -</a>
 </div>
 <div class="botonera">

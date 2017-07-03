@@ -9,7 +9,7 @@
 		class="org.tiposDeClases.Usuario" />
 
 	<form
-		action="${pageContext.request.contextPath}/admin/usuarioFORMAdmin"
+		action="${pageContext.request.contextPath}/admin/controladorUsuariosAdmin"
 		method="post">
 		<input type="hidden" name="id" value="${usuario.id}"/>
 		<fieldset>
@@ -63,7 +63,7 @@
 			<input type="submit" name="salir" value="SALIR" />
 			<p class="errores">${usuario.errores}</p>
 
-			<input type="hidden" name="opform" value="${param.op}" />
+			<input type="hidden" name="opcion" value="${param.op}" />
 		</fieldset>
 	</form>
 	<c:if test="${param.op == 'borrar'}">

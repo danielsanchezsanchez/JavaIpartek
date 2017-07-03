@@ -13,20 +13,17 @@ public class ControladorMenuAdministradores extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	static final String RUTA_MENU_ADMINISTRADOR = "/WEB-INF/vistas/administradorMenu.jsp";
 	static final String RUTA_INDEX = "/WEB-INF/vistas/index.jsp";
-	static final String RUTA_ADMINISTRADOR_USUARIOCRUD = "/admin/usuarioCRUD";
-	static final String RUTA_ADMINISTRADOR_PRODUCTOCRUD = "/admin/productoCRUD";
+	static final String RUTA_ADMINISTRADOR_USUARIOCRUD = "/admin/controladorUsuariosAdmin";
+	static final String RUTA_ADMINISTRADOR_PRODUCTOCRUD = "/admin/controladorProductosAdmin";
 	static final String RUTA_ADMINISTRADOR_FACTURACRUD = "/admin/facturaCRUD";
-	static final String RUTA_ADMINISTRADOR_STOCKCRUD = "/admin/stockCRUD";
+	static final String RUTA_ADMINISTRADOR_STOCKCRUD = "/admin/controladorStocksAdmin";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Creamos conexion con la sesion
-		// HttpSession sesion = request.getSession();
 		String op = request.getParameter("op");
-
 		HttpSession sesion = request.getSession();
 
 		// Primera vez que accede

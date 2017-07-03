@@ -7,7 +7,8 @@
 	<jsp:useBean id="producto" scope="request"
 		class="org.tiposDeClases.Producto" />
 
-	<form action="${pageContext.request.contextPath}/admin/stockFORMAdmin"
+	<form
+		action="${pageContext.request.contextPath}/admin/controladorStocksAdmin"
 		method="post">
 		<fieldset>
 			<label for="id_producto">Id del producto: </label> <input
@@ -34,12 +35,12 @@
 				<input type="submit" value="${fn:toUpperCase(param.op)}" />
 			</c:if>
 			<c:if test="${param.op==null or param.op=='' }">
-				<input type="submit" value="${op}" />
+				<input type="submit" value="${fn:toUpperCase(op)}" />
 			</c:if>
 			<input type="submit" name="salir" value="SALIR" />
 			<p class="errores">${factura.errores}</p>
-			<input type="hidden" name="op" value="${op}" /> <input type="hidden"
-				name="opform" value="Aceptar" />
+			<input type="hidden"
+				name="opcion" value="Aceptar" />
 		</fieldset>
 	</form>
 	<div>${errores}</div>
