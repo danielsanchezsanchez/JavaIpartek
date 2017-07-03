@@ -56,8 +56,6 @@ public class ControladorStocksAdmin extends HttpServlet {
 			return;
 		}
 
-		System.out.println("op" + op);
-		System.out.println("opcion" + opcion);
 		// Cuando escoje una de las opciones
 		if (op != null) {
 

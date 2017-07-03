@@ -6,7 +6,8 @@
 <meta charset="UTF-8" />
 <title>Productos S.L.</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/estilos.css">
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/funciones.js"></script>
 </head>
 <body>

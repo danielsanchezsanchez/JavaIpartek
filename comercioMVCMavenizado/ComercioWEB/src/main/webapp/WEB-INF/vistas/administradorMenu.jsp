@@ -5,23 +5,23 @@
 
 <h2 style="margin: 20px;">Opciones de administrador:</h2>
 
-<div class="opcionesAdmin">
-		<h2 style="margin: 20px; border: '1';">
-		<a id="botonGestionUsuarios"
+<div class="opcionesAdmin" class="btn-group" style="margin: 20px;" role="group">
+		
+		<a id="botonGestionUsuarios" class="btn btn-primary" role="button"
 		href="${pageContext.request.contextPath}/admin/controladorMenuAdministradores?op=gestionUsuarios">-
 		Gestion de usuarios -</a> 
 		
-		<a id="botonGestionProductos"
+		<a id="botonGestionProductos" class="btn btn-primary" role="button"
 		href="${pageContext.request.contextPath}/admin/controladorMenuAdministradores?op=gestionDeProductos">-
 		Gestion de productos -</a>
 		
-		<a id="botonGestionStock"
+		<a id="botonGestionStock" class="btn btn-primary" role="button"
 		href="${pageContext.request.contextPath}/admin/controladorMenuAdministradores?op=gestionDeStock">-
 		Gestion de Stock -</a>
 		
-		<a id="botonGestionFacturas"
+		<a id="botonGestionFacturas" class="btn btn-primary" role="button"
 		href="${pageContext.request.contextPath}/admin/controladorMenuAdministradores?op=gestionDeFacturas">-
-		Gestion de facturas -</a></h2>
+		Gestion de facturas -</a>
 </div>
 
 <div class="botonera">
