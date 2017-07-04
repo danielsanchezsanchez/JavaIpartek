@@ -1,8 +1,5 @@
 <%@ include file="includes/cabeceraUsuario/cabeceraUsuario.jsp"%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <h2 style="margin: 20px;">Listado del carrito: productos cogidos</h2>
 
 <table>
