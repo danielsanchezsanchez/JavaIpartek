@@ -32,6 +32,10 @@ public class ControladorIndex extends HttpServlet {
 
 		// Controlamos las diferentes opciones desde el controlador de la pagina
 		// de inicio
+		Usuario usuarioLog;
+		String nickLog;
+		String passLog;
+		DAOUsuarioddbb usuDBLog;
 		String op = request.getParameter("op");
 
 		if (op == null) {
@@ -40,8 +44,66 @@ public class ControladorIndex extends HttpServlet {
 		} else {
 			switch (op) {
 			case "conectarUsuario":
-				request.getRequestDispatcher(RUTA_FORMULARIO_LOGIN).forward(request, response);
-				return;
+
+				// Creamos una instancia de usuario para guardar lo introducido
+				// por el usuario y comparar.
+				usuarioLog = null;
+				nickLog = request.getParameter("nickusuario");
+				passLog = request.getParameter("contrasenia");
+
+				if (nickLog != null && passLog != null) {
+					// Creamos una instancia de usuario para guardar lo
+					// introducido
+					// por el usuario y comparar.
+					usuarioLog = null;
+					nickLog = request.getParameter("nickusuario");
+					passLog = request.getParameter("contrasenia");
+
+					usuDBLog = new DAOUsuarioddbbMySQL();
+					usuDBLog.abrirComercioddbb();
+					usuarioLog = usuDBLog.buscarPorNick(nickLog);
+					usuDBLog.cerrarComercioddbb();
+					// Comprobamos si el usuario esta registrado
+					if (usuarioLog == null) {
+						Usuario usuLog = new Usuario();
+						usuLog.setNickusuario(nickLog);
+						usuLog.setErrores("Usuario no valido.");
+						request.setAttribute("usuario", usuLog);
+						request.getRequestDispatcher(RUTA_FORMULARIO_LOGIN).forward(request, response);
+						return;
+					} else {
+						if (usuarioLog.getContrasenia().equals(passLog)) {
+							// Pasamos los parametros a la sesion para poder
+							// mostrarlos en jsp
+							HttpSession sesion = request.getSession();
+							sesion.setAttribute("usuario", usuarioLog);
+							if (usuarioLog.getRol() == 1) {
+								response.sendRedirect(request.getContextPath() + RUTA_ADMINISTRADOR_LOGEADO);
+								return;
+							}
+							if (usuarioLog.getRol() == 2) {
+								// Cargamos en una DAL de articulos "CARRITO"
+								// cada
+								// una de las
+								// peticiones.
+								CarritoDAL carrito;
+								carrito = CarritoDALFactory.getCarritoDAL();
+								sesion.setAttribute("carrito", carrito);
+
+								response.sendRedirect(request.getContextPath() + RUTA_USUARIO_LOGEADO);
+								return;
+							}
+						} else {
+							usuarioLog.setErrores("Usuario no valido.");
+							request.setAttribute("usuario", usuarioLog);
+							request.getRequestDispatcher(RUTA_FORMULARIO_LOGIN).forward(request, response);
+							return;
+						}
+					}
+				} else {
+					request.getRequestDispatcher(RUTA_FORMULARIO_LOGIN).forward(request, response);
+					return;
+				}
 			case "registro":
 				request.getRequestDispatcher(RUTA_FORMULARIO_REGISTRO).forward(request, response);
 				return;
@@ -49,11 +111,11 @@ public class ControladorIndex extends HttpServlet {
 
 				// Creamos una instancia de usuario para guardar lo introducido
 				// por el usuario y comparar.
-				Usuario usuarioLog = null;
-				String nickLog = request.getParameter("nickusuario");
-				String passLog = request.getParameter("contrasenia");
+				usuarioLog = null;
+				nickLog = request.getParameter("nickusuario");
+				passLog = request.getParameter("contrasenia");
 
-				DAOUsuarioddbb usuDBLog = new DAOUsuarioddbbMySQL();
+				usuDBLog = new DAOUsuarioddbbMySQL();
 				usuDBLog.abrirComercioddbb();
 				usuarioLog = usuDBLog.buscarPorNick(nickLog);
 				usuDBLog.cerrarComercioddbb();

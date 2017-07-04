@@ -7,6 +7,7 @@
 <title>Productos S.L.</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script src="${pageContext.request.contextPath}/js/jquery-1.12.4.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/funciones.js"></script>
 </head>
@@ -20,9 +21,9 @@
 	<c:set var="rutaRegistro"
 		value="${pageContext.request.contextPath}/WEB-INF/vistas/usuarioRegistro.jsp" />
 	<header>
-		<nav class="navbar navbar-inverse navbar-fixed-top">
-			<div class="container">
-				<c:if test="${pageContext.request.requestURI==rutaIndex}">
+		<c:if test="${pageContext.request.requestURI==rutaIndex}">
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container">
 					<div class="navbar-header">
 						<button type="button" class="navbar-toggle collapsed"
 							data-toggle="collapse" data-target="#navbar"
@@ -39,23 +40,35 @@
 							action="${pageContext.request.contextPath}/controladorIndex?op=conectarUsuario"
 							method="post">
 							<div class="form-group">
-								<input type="text" placeholder="Usuario" class="form-control"
+								<input type="text" placeholder="Usuario" class="form-control" id="nickusuario"
 									name="nickusuario">
 							</div>
 							<div class="form-group">
-								<input type="password" placeholder="Contrasenia"
+								<input type="password" placeholder="Contrasenia" id="contrasenia"
 									class="form-control" name="contrasenia">
 							</div>
 							<button type="submit" class="btn btn-success">Logear</button>
 						</form>
 					</div>
-				</c:if>
-				<c:if test="${pageContext.request.requestURI==rutaLogin}">
-					<div class="alert alert-info" role="alert">Logeando usuario</div>
-				</c:if>
-				<c:if test="${pageContext.request.requestURI==rutaRegistro}">
-					<label id="registradoboton">Registrando usuario</label>
-				</c:if>
+				</div>
+			</nav>
+		</c:if>
+		<c:if test="${pageContext.request.requestURI==rutaLogin}">
+			<div class="alert alert-info alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>Logeando usuario</strong>
 			</div>
-		</nav>
+		</c:if>
+		<c:if test="${pageContext.request.requestURI==rutaRegistro}">
+			<div class="alert alert-info alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>Registrando usuario</strong>
+			</div>
+		</c:if>
 	</header>

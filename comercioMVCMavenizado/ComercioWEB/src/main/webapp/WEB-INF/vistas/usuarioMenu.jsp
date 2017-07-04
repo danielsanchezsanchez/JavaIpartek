@@ -1,24 +1,29 @@
 <%@ include file="includes/cabeceraUsuario/cabeceraUsuario.jsp"%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<section>
+	<div class="row">
+		<nav class="col-xs-10 col-xs-offset-1">
+			<div class="jumbotron">
+				<h2>Opciones de CLIENTE:</h2>
+				<p>En esta parte del programa web, usted como usuario podra
+					comprobar sus transacciones y realizar nuevas.</p>
+				<div class="btn-group" role="group">
 
-<h2 style="margin: 20px;">Opciones de CLIENTE: </h2>
+					<a class="btn btn-primary"
+						href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=comenzarAComprar"
+						role="button">Comenzar una compra</a> <a class="btn btn-primary"
+						href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=verHistoricos"
+						role="button">Ver tus compras</a>
 
-	<div class="opcionesAdmin">
-		<h2 style="margin: 20px; border: '1';">
-		
-		<a id="botonIrALaTienda"
-		href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=comenzarAComprar">-
-		Comenzar una compra -</a> 
-		<a id="botonIrALosHistoricosDeCompra"
-		href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=verHistoricos">-
-		Ver tus compras -</a> 
-		
-		</h2>
-</div>
-	<div class="botonera">
-				<a onclick="return confirm('¿Estás seguro de que quieres salir');" id="botonSalir" href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=desconectar">-
-					Volver al inicio -</a> 
+				</div>
 			</div>
+			<div class="jumbotron">
+				<a class="btn btn-lg btn-primary"
+					onclick="return confirm('¿Estás seguro de que quieres salir');"
+					href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=desconectar"
+					role="button">Volver al inicio</a>
+			</div>
+		</nav>
+	</div>
+</section>
 <%@ include file="includes/cabeceraUsuario/pieUsuario.jsp"%>
