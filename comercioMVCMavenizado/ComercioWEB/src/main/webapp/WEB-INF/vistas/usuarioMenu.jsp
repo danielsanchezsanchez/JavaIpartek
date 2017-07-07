@@ -18,7 +18,7 @@
 				</div>
 			</div>
 			<div class="jumbotron">
-				<a class="btn btn-lg btn-primary"
+				<a class="btn btn-lg btn-success"
 					onclick="return confirm('¿Estás seguro de que quieres salir');"
 					href="${pageContext.request.contextPath}/usuarios/controladorMenuUsuarios?op=desconectar"
 					role="button">Volver al inicio</a>

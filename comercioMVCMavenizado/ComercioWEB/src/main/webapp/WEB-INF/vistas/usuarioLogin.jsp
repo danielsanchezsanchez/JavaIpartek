@@ -1,7 +1,5 @@
 <%@ include file="includes/cabeceraIndex/cabeceraIndex.jsp"%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="row">
 	<nav class="col-xs-10 col-xs-offset-1">
 		<h2>Logeo de usuario:</h2>
