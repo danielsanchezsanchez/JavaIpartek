@@ -86,6 +86,7 @@
 							</fieldset>
 						</c:if>
 						<input type="hidden" name="opcion" value="${param.op}" />
+						<input type="hidden" name="op" value="alta" />
 					</fieldset>
 				</form>
 				<c:if test="${param.op == 'borrar'}">

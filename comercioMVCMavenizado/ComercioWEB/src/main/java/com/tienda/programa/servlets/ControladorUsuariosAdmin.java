@@ -43,7 +43,7 @@ public class ControladorUsuariosAdmin extends HttpServlet {
 		}
 
 		// Cuando escoje una de las opciones
-		if (op != null) {
+		if (op != null && opcion == null) {
 
 			String nick = request.getParameter("nickusuario");
 			Usuario usuario;
@@ -72,7 +72,7 @@ public class ControladorUsuariosAdmin extends HttpServlet {
 			}
 
 		}
-		if (opcion != null) {
+		if (opcion != null && op != null) {
 			Usuario usuario = new Usuario(Integer.parseInt(request.getParameter("id")), Integer.parseInt(request.getParameter("id_rol")), request.getParameter("nickusuario"), request.getParameter("nombre"), request.getParameter("apellido1"), request.getParameter("apellido2"));
 
 			switch (opcion) {
@@ -97,6 +97,7 @@ public class ControladorUsuariosAdmin extends HttpServlet {
 				if (DAOUsuario.buscarPorNick(nick) != null) {
 					usuario.setErrores("Nick no disponible.");
 					request.setAttribute("usuario", usuario);
+					request.setAttribute("op", op);
 					request.getRequestDispatcher(RUTA_FORMULARIO_USUARIOS).forward(request, response);
 					return;
 				}
@@ -107,6 +108,7 @@ public class ControladorUsuariosAdmin extends HttpServlet {
 				if (pass1.equals(pass2) == false) {
 					usuario.setErrores("Las contraseñas deben de ser identicas.");
 					request.setAttribute("usuario", usuario);
+					request.setAttribute("op", op);
 					request.getRequestDispatcher(RUTA_FORMULARIO_USUARIOS).forward(request, response);
 					return;
 				}
@@ -115,6 +117,7 @@ public class ControladorUsuariosAdmin extends HttpServlet {
 				if (nick.length() < 4) {
 					usuario.setErrores("El nick debe tener al menos 5 caracteres.");
 					request.setAttribute("usuario", usuario);
+					request.setAttribute("op", op);
 					request.getRequestDispatcher(RUTA_FORMULARIO_USUARIOS).forward(request, response);
 					return;
 				}
@@ -122,6 +125,7 @@ public class ControladorUsuariosAdmin extends HttpServlet {
 				if (pass1.length() < 4) {
 					usuario.setErrores("La contraseña debe tener al menos 5 caracteres.");
 					request.setAttribute("usuario", usuario);
+					request.setAttribute("op", op);
 					request.getRequestDispatcher(RUTA_FORMULARIO_USUARIOS).forward(request, response);
 					return;
 				}

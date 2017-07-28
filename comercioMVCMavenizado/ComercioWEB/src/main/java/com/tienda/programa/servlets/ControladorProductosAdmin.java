@@ -49,7 +49,7 @@ public class ControladorProductosAdmin extends HttpServlet {
 		}
 
 		// Cuando escoje una de las opciones
-		if (op != null) {
+		if (op != null && opcion == null) {
 
 			String nombre = request.getParameter("nombre");
 
@@ -78,9 +78,14 @@ public class ControladorProductosAdmin extends HttpServlet {
 
 			}
 		}
-		if (opcion != null) {
-
-			Producto producto = new Producto(Integer.parseInt(request.getParameter("id")), request.getParameter("nombre"), new BigDecimal(request.getParameter("precio")), request.getParameter("descripcion"), request.getParameter("url_producto_img"));
+		if (opcion != null && op != null) {
+			BigDecimal precio2;
+			if (request.getParameter("precio") == null || request.getParameter("precio").length() == 0) {
+				precio2 = new BigDecimal("0.0");
+			} else {
+				precio2 = new BigDecimal(request.getParameter("precio"));
+			}
+			Producto producto = new Producto(Integer.parseInt(request.getParameter("id")), request.getParameter("nombre"), precio2, request.getParameter("descripcion"), request.getParameter("url_producto_img"));
 
 			switch (opcion) {
 			case "modificar":
@@ -104,6 +109,7 @@ public class ControladorProductosAdmin extends HttpServlet {
 				if (DAOProducto.buscarPorNombre(nombre) != null) {
 					producto.setErrores("Nombre no disponible.");
 					request.setAttribute("producto", producto);
+					request.setAttribute("op", op);
 					request.getRequestDispatcher(RUTA_FORMULARIO_PRODUCTOS).forward(request, response);
 					return;
 				}
@@ -112,6 +118,7 @@ public class ControladorProductosAdmin extends HttpServlet {
 				if (nombre.length() < 4) {
 					producto.setErrores("El nombre debe tener al menos 5 caracteres.");
 					request.setAttribute("producto", producto);
+					request.setAttribute("op", op);
 					request.getRequestDispatcher(RUTA_FORMULARIO_PRODUCTOS).forward(request, response);
 					return;
 				}

@@ -11,8 +11,9 @@ public class DAOFactura_ProductoddbbMySQL extends DAOComercioddbbMySQL implement
 
 	private final static String INSERT = "INSERT INTO factura_productos (id_factura, id_producto, cantidad)" + " VALUES (?, ?, ?)";
 	private final static String BUSCAR_POR_IDFACTURA = "SELECT * FROM factura_productos WHERE id_factura LIKE ?";
+	private final static String BUSCAR_IDFACTURA_POR_NOMBRE = "SELECT id FROM facturas WHERE numero_factura LIKE ?";
 
-	private PreparedStatement psInsert, psBuscarPorIdFactura;
+	private PreparedStatement psInsert, psBuscarPorIdFactura, psBuscarIdFacturaPorNombre;
 
 	private void cerrar(PreparedStatement ps) {
 		cerrar(ps, null);
@@ -81,6 +82,29 @@ public class DAOFactura_ProductoddbbMySQL extends DAOComercioddbbMySQL implement
 		} finally {
 			cerrar(psInsert);
 		}
+	}
+
+	@Override
+	public int buscarIdFacturaPorNombreFactura(String nombre_factura) {
+		int id_factura = 0;
+		ResultSet rs = null;
+		try {
+			psBuscarIdFacturaPorNombre = con.prepareStatement(BUSCAR_IDFACTURA_POR_NOMBRE);
+			psBuscarIdFacturaPorNombre.setString(1, nombre_factura);
+			rs = psBuscarIdFacturaPorNombre.executeQuery();
+
+			if (rs.next()) {
+
+				id_factura = rs.getInt("facturas.id");
+			}
+
+		} catch (SQLException e) {
+			throw new DAOBaseDeDatosException("Error en Buscar el id de la factura", e);
+		} finally {
+			cerrar(psBuscarIdFacturaPorNombre, rs);
+		}
+
+		return id_factura;
 	}
 
 	@Override

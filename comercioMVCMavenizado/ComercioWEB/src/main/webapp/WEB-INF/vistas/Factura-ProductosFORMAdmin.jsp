@@ -5,40 +5,41 @@
 	<div class="row">
 		<nav class="col-xs-10 col-xs-offset-1">
 			<div class="jumbotron">
-				<h2>Mantenimiento de factura</h2>
-
+				<h2>Mantenimiento de facturas por compra:</h2>
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th>Numero de la factura</th>
-							<th>Usuario</th>
-							<th>Fecha de la compra</th>
-							<th colspan="3">Operaciones</th>
+							<th>Id de la factura</th>
+							<th>Id del producto</th>
+							<th>Cantidad</th>
+							<th colspan="2">Operaciones</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${requestScope.facturas}" var="factura">
+						<c:forEach items="${requestScope.compras}" var="articulo">
 							<tr>
-								<td>${factura.numero_factura}</td>
-								<td>${factura.usuario.nickusuario}</td>
-								<td>${factura.fecha}</td>
+								<td>${articulo.id_factura}</td>
+								<td>${articulo.id_producto}</td>
+								<td>${articulo.cantidad}</td>
 								<td><a class="btn btn-info btn-sm"
-									href="facturaCRUD?op=modificar&numero_factura=${factura.numero_factura}">-
+									href="facturaCRUD?op=modificarHistorico&id_factura=${articulo.id_factura}">-
 										Modificar -</a></td>
 								<td><a class="btn btn-info btn-sm"
-									href="facturaCRUD?op=borrar&numero_factura=${factura.numero_factura}">-
+									href="facturaCRUD?op=borrarHistorico&id_factura=${articulo.id_factura}">-
 										Borrar -</a></td>
-								<td><a class="btn btn-info btn-sm"
-									href="facturaCRUD?op=desplegar&numero_factura=${factura.numero_factura}">-
-										Desplegar factura -</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 				<div class="botoneraAlta">
 					<a class="btn btn-warning btn-lg btn-block"
-						href="facturaCRUD?op=alta">- Dar de alta nueva factura -</a>
+						href="facturaCRUD?op=altaHistorico">- Dar de alta nueva factura -</a>
 				</div>
+				<div class="botonera">
+				<a class="btn btn-lg btn-success"
+					href="facturaCRUD">- Volver al menu de
+					facturas -</a>
+			</div>
 			</div>
 		</nav>
 	</div>

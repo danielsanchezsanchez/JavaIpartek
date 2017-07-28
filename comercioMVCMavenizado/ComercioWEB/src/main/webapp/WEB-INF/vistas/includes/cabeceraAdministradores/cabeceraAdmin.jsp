@@ -9,6 +9,13 @@
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/funciones.js"></script>
+
+<style>
+.jumbotron {
+	min-height: 70vh;
+}
+</style>
+
 </head>
 <body>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
